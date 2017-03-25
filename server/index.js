@@ -51,7 +51,7 @@ app.get('/', function(req, res) {
 socket(server);
 
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
     var webpackDevMiddleware = require('webpack-dev-middleware');
     var webpackHotMiddleware = require('webpack-hot-middleware');
     var webpack = require('webpack');
@@ -85,7 +85,7 @@ server.listen(PORT, (error) => {
 function createPage() {
   let scripts, staticCss;
 
-  if (process.env.NODE_ENV != 'production') { 
+  if (process.env.NODE_ENV === 'development') { 
     scripts = `<script type="text/javascript" src="/bundle.js"></script>`;
     staticCss = '';
   } else {

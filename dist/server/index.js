@@ -49,7 +49,7 @@ app.get('/', function (req, res) {
 
 socket(server);
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'development') {
   var webpackDevMiddleware = require('webpack-dev-middleware');
   var webpackHotMiddleware = require('webpack-hot-middleware');
   var webpack = require('webpack');
@@ -83,11 +83,10 @@ function createPage() {
   var scripts = void 0,
       staticCss = void 0;
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV === 'development') {
     scripts = '<script type="text/javascript" src="/bundle.js"></script>';
     staticCss = '';
-  } 
-  if (!process.env.NODE_ENV) {
+  } else {
     scripts = '<script type="text/javascript" src="/dist/vendor.bundle.js"></script><script type="text/javascript" src="/dist/bundle.js"></script>';
     staticCss = '<link rel="stylesheet" type="text/css" href="/dist/styles.css">';
   }
