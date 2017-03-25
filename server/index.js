@@ -18,6 +18,7 @@ var server = require('http').createServer(app);
 const socket = require('./socket_server');
 
 app.use('/client', express.static(process.cwd() + '/client'));
+app.use('/dist', express.static(process.cwd() + '/dist'));
 
 app.get('/', function(req, res) {
 	res.send(createPage());
@@ -82,6 +83,16 @@ server.listen(PORT, (error) => {
 
 
 function createPage() {
+  let scripts, staticCss;
+
+  if (process.env.NODE_ENV != 'production') { 
+    scripts = `<script type="text/javascript" src="/bundle.js"></script>`;
+    staticCss = '';
+  } else {
+    scripts = `<script type="text/javascript" src="/dist/vendor.bundle.js"></script><script type="text/javascript" src="/dist/bundle.js"></script>`;
+    staticCss = '<link rel="stylesheet" type="text/css" href="/dist/styles.css">';
+  }
+
 	const page = 
 	`<!DOCTYPE html>
 	<html lang="en">
@@ -90,10 +101,11 @@ function createPage() {
 	    <title>Folring</title>
       <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
       <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+      ${staticCss}
   </head>
 	<body>
     <div id="root"></div>
-    <script type="text/javascript" src="/bundle.js"></script>
+    ${scripts}
 	</body>
 	</html>`;
 
