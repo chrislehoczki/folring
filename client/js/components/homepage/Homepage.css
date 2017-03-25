@@ -7,6 +7,9 @@
   border-radius: 20px;
   display: inline-block;
   border: 4px solid deepskyblue;
+  color: deepskyblue;
+  text-align: center;
+  margin: 20px 0;
 }
 
 button.join {
