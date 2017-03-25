@@ -7,7 +7,7 @@ import {
 
 import Homepage from './homepage/Homepage';
 import Profile from './profile/Profile';
-import Tolring from './tolring/Tolring';
+import Folring from './Folring/Folring';
 import Nav from './nav/Nav.js';
 
 // wrap <Route> and use this everywhere instead, then when
@@ -25,7 +25,7 @@ const RouteConfigExample = () => (
       <Nav />
     	<Route exact path="/" component={Homepage}/>
     	<Route path="/profile" component={Profile}/>
-    	<Route path="/tolring" component={Tolring}/>
+    	<Route path="/Folring" component={Folring}/>
     </div>
   </Router>
 )

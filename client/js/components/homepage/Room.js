@@ -9,7 +9,7 @@ export default class Room extends Component {
 		// const user = window.localStorage.user;
 		const user = window.user;
 		window.socket.emit('join_room', {room: this.props.roomId, user});
-		this.props.history.push('/tolring');
+		this.props.history.push('/Folring');
 	}
 
 	render() {
