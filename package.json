@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "babel-watch ./server/index.js --presets es2015,stage-2",
+    "start": "NODE_ENV=production babel-node server/index.js",
     "dev-server": "NODE_ENV=development nodemon --config nodemon.json --exec babel-node server/index.js",
     "prod-server": "NODE_ENV=production babel-node server/index.js",
     "build-client": "NODE_ENV='production' webpack --config webpack.config.prod.js"
