@@ -19,7 +19,7 @@ export default class NameChecker extends Component {
 			<div>
 				<h2> What is your name? </h2>
 				<input onChange={this.addUser}></input>
-				<button onClick={this.props.goToRooms}></button>
+				<button className="join" onClick={this.props.goToRooms}>Select Game Room</button>
 			</div>
 		);
 	}
