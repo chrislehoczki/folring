@@ -1,0 +1,9 @@
+{
+  "verbose": true,
+  "ignore": [
+  	"/client/js",
+  	"/node_modules"
+
+
+  ]
+}
