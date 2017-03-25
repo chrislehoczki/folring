@@ -1,7 +1,21 @@
 
+require.extensions['.css'] = () => {
+  return;
+};
+
 var express = require('express')
 var app = express();
 var server = require('http').createServer(app);
+
+// const React = require('react');
+// const ReactDOMServer = require('react-dom/server');
+// const StaticRouter = require('react-router').StaticRouter;
+// import { StaticRouter as Router, matchPath } from 'react-router';
+// import { renderToString } from 'react-dom/server';
+// import App from '../client/js/components/App';
+// const ReactApp = require('../client/js/components/App');
+
+const socket = require('./socket_server');
 
 app.use('/client', express.static(process.cwd() + '/client'));
 
@@ -9,18 +23,32 @@ app.get('/', function(req, res) {
 	res.send(createPage());
 });
 
-const UPDATE_GAME = 'update_game';
-const GAME_END = 'game_end';
-const GAME_START = 'game_start';
 
-var io = require('socket.io')(server);
-io.on('connection', function (socket) {
-	console.log('connext to socket')
-  socket.emit('game_death', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
+// const routes = [
+//     '/',
+//     '/profile',
+//     '/tolring'
+// ];
+
+// app.get('*', (req, res) => {
+//     // const match = routes.reduce((acc, route) => matchPath(req.url, route, { exact: true }) || acc, null);
+//     // if (!match) {
+//     //     res.status(404).send(render(<h1>No Match</h1>));
+//     //     return;
+//     // }
+
+//     const html = ReactDOMServer.renderToString(<StaticRouter context={{}} location={req.url}>
+//                                   <ReactApp />
+//                                 </StaticRouter>);
+
+//     res.send(createPage(html));
+    
+// });
+
+
+
+socket(server);
+
 
 if (process.env.NODE_ENV !== 'production') {
     var webpackDevMiddleware = require('webpack-dev-middleware');
@@ -29,9 +57,6 @@ if (process.env.NODE_ENV !== 'production') {
     var config = require('../webpack.config.dev.js');
 
     var compiler = webpack(config);
-
-    // var morgan = require('morgan');
-    // app.use(morgan('dev'));
     app.use(webpackDevMiddleware(compiler, {
       hot: true,
       publicPath: config.output.publicPath,
@@ -46,7 +71,7 @@ if (process.env.NODE_ENV !== 'production') {
     // reload(server, app);
   }
 
-var PORT = process.env.PORT || 8080;
+var PORT = process.env.PORT || 3000;
 server.listen(PORT, (error) => {
   if (error) {
     console.error(error);

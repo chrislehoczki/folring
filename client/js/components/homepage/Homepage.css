@@ -1,0 +1,10 @@
+
+
+.room {
+	width: 150px;
+	height: 150px;
+	margin: 19px;
+	border-radius: 20px;
+	background: green;
+	display: inline-block;
+}
