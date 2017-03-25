@@ -50,11 +50,27 @@ input {
 }
 
 #message-input button:focus {
-	outline: none;
+  outline: none;
 }
 
 #messaging p {
-	padding: 5px 15px;
+  padding: 5px 15px;
   font-size: 18px;
   font-style: italic;
 }
+
+#users {
+	position: fixed;
+	top: 50px;
+	right: 50px;
+	text-align: center;
+	border: 1px solid black;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+#users .user {
+  color: white;
+}
+
+

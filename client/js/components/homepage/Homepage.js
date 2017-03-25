@@ -9,9 +9,11 @@ export default class Homepage extends Component {
 
 	constructor(props) {
 		super(props);
+		// const user = window.localStorage.user;
+		const user = window.user;
 		this.state = {
-			nameChecker: window.user ? false : true,
-			rooms: window.user ? true: false
+			nameChecker: user ? false : true,
+			rooms: user ? true: false
 		}
 		this.goToRooms = this.goToRooms.bind(this);
 	}
@@ -29,7 +31,6 @@ export default class Homepage extends Component {
 			<div>
 				{this.state.nameChecker ? <NameChecker goToRooms={this.goToRooms} /> : null }
 				{this.state.rooms ? roomComponents : null}
-
 			</div>
 		);
 	}

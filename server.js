@@ -15,7 +15,7 @@ var server = require('http').createServer(app);
 // import App from '../client/js/components/App';
 // const ReactApp = require('../client/js/components/App');
 
-const socket = require('./socket_server');
+const socket = require('./server/socket_server');
 
 app.use('/client', express.static(process.cwd() + '/client'));
 app.use('/dist', express.static(process.cwd() + '/dist'));
@@ -55,7 +55,7 @@ if (process.env.NODE_ENV !== 'production') {
     var webpackDevMiddleware = require('webpack-dev-middleware');
     var webpackHotMiddleware = require('webpack-hot-middleware');
     var webpack = require('webpack');
-    var config = require('../webpack.config.dev.js');
+    var config = require('./webpack.config.dev.js');
 
     var compiler = webpack(config);
     app.use(webpackDevMiddleware(compiler, {

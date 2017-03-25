@@ -51,20 +51,26 @@ function socket(server) {
 	    	// add client to room
 	    	rooms[room].players.push(user); 
 
-	    	console.log('ROOM OBJ', rooms)
-	    	console.log('clients length', length)
-	    	console.log('clients', sockets)
-	    	
+	    	io.to(currentRoomId).emit('update_room', {room: rooms[room]});
 		});
 
 		socket.on('leave_room', function(config) {
+			console.log('leaving room now', config)
+			if (!config) {
+				return;
+			}
 			const room = config.room;
 			const user = config.user;
 
 			if(!room) {
 				socket.leave(currentRoomId);
-				const index = rooms[currentRoomId].users.find((user) => user === user);
-				console.log("index", index)
+				
+				const currentPlayers = rooms[currentRoomId].players;
+				const index = currentPlayers.findIndex((player) => player === player);
+				const newPlayers = [...currentPlayers.slice(0, index), ...currentPlayers.slice(index + 1)];
+				
+				rooms[currentRoomId].players = newPlayers;
+				console.log(rooms);
 			} else {
 				socket.leave(room);
 			}
@@ -72,6 +78,16 @@ function socket(server) {
 
 
 		});
+
+		socket.on('update_room', function(config) {
+			console.log("UPDATING STATE ON SERVER", config)
+			rooms[currentRoomId].game = {...rooms[currentRoomId].game, ...config};
+			console.log('CURRENT ROOM', rooms[currentRoomId])
+			console.log(rooms);
+			io.to(currentRoomId).emit('update_room', {room: rooms[currentRoomId]});
+		});
+
+
 
 		
 
