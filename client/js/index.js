@@ -1,11 +1,15 @@
-
-import { socket } from './socket/socket';
+// import { Router } from 'react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Tolring from './components/Tolring';
+
+
+// import routes from './routes/routes';
+
+import BasicExample from './components/App.js';
+import { socket } from './socket/socket';
 
 socket();
 
 ReactDOM.render(
-  <Tolring />
+  	<BasicExample />
   , document.querySelector('#root'));
