@@ -1,7 +1,9 @@
-function socket(server, app) {
+function socket(server) {
+	const options = {
+		'transports': ['websockets']
+	}
+	var io = require('socket.io', options)(server);
 
-	app.io = require('socket.io')(server);
-	
 	const rooms = {};
 
 	for (var i = 0; i < 5; i++) {
@@ -17,7 +19,7 @@ function socket(server, app) {
 	}
 
 	// handle incoming connections from clients
-	app.io.on('connection', function(socket) {
+	io.on('connection', function(socket) {
 
 		var currentRoomId = null;
 
@@ -27,7 +29,7 @@ function socket(server, app) {
 			if (currentRoomId) {
 				rooms[currentRoomId].messages.push(message);
 			
-				app.io.to(currentRoomId).emit('message', message);
+				io.to(currentRoomId).emit('message', message);
 			}
 			
 		});
@@ -46,12 +48,12 @@ function socket(server, app) {
 	       		
 	    	socket.join(rooms[room].name);
 	    	currentRoomId = rooms[room].name;
-	    	const { sockets, length } = app.io.sockets.adapter.rooms[room];
+	    	const { sockets, length } = io.sockets.adapter.rooms[room];
 
 	    	// add client to room
 	    	rooms[room].players.push(user); 
 
-	    	app.io.to(currentRoomId).emit('update_room', {room: rooms[room]});
+	    	io.to(currentRoomId).emit('update_room', {room: rooms[room]});
 		});
 
 		socket.on('leave_room', function(config) {
@@ -84,7 +86,7 @@ function socket(server, app) {
 			rooms[currentRoomId].game = {...rooms[currentRoomId].game, ...config};
 			console.log('CURRENT ROOM', rooms[currentRoomId])
 			console.log(rooms);
-			app.io.to(currentRoomId).emit('update_room', {room: rooms[currentRoomId]});
+			io.to(currentRoomId).emit('update_room', {room: rooms[currentRoomId]});
 		});
 
 
