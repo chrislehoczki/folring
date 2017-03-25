@@ -28,8 +28,15 @@ export default class Piece extends React.Component {
       break;
     }
 
+    if (this.props.highlight) {
+      className = className + " highlight"
+    }
+
+    let idName = "p"+this.props.index
+
     return (
-      <div className={className} onClick={this.handleClick.bind(this)}></div>
+
+      <div id={idName} className={className} onClick={this.handleClick.bind(this)}></div>
     )
   }
 

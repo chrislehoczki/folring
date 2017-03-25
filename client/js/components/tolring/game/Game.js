@@ -90,14 +90,9 @@ export default class Game extends React.Component {
     })
   }
 
-  render() {
-    
-    const pieces = this.state.board.map((status, index) => {
-      return <Piece key={index} index={index} status={status} handleClick={this.handleClick.bind(this)} />
-    })
-
-    const possibleMoves = {
-      0: [1,2],
+  highlightNeighbours(piece) {
+    const mapOfNeighbours = {
+      0: [1,2,4],
       1: [0,4,7,3],
       2: [0,4,8,5],
       3: [1,7,10,6],
@@ -131,10 +126,26 @@ export default class Game extends React.Component {
       31: [24,28,34,27],
       32: [25,29,35,34,28],
       33: [26,30,35,29],
-      34: [28,32,31],
-      35: [29,33,32]
+      34: [28,32,31,36],
+      35: [29,33,32,36],
+      36: [32,35,34]
     }
+    mapOfNeighbours[piece].map((piece, index) => {
+      document.querySelector('#p'+piece).classList.add("highlight")
+    })
+  }
 
+  clearHghlights() {
+    for (var i=0; i<document.querySelectorAll('.piece').length; i++) {
+      document.querySelectorAll('.piece')[i].classList.remove("highlight")
+    }
+  }
+
+  render() {
+    const pieces = this.state.board.map((status, index) => {
+      return <Piece key={index} index={index} status={status} handleClick={this.handleClick.bind(this)} />
+    })
+    const neighbors = this.state.pieceSelected ? this.highlightNeighbours(this.state.selectedIndex) : this.clearHghlights()
     return (
       <div className="board">
         {pieces}

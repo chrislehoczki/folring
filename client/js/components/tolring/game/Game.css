@@ -51,8 +51,12 @@ li {
   background: transparent;
 }
 
+.piece.highlight {
+  background: deepskyblue;
+}
+
 .piece.selected {
-  background: #ff9900 !important;
+  -webkit-filter: brightness(1.6);
   transition: 0.5s;
 }
 
