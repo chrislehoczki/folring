@@ -7,6 +7,7 @@ var express = require('express')
 var app = express();
 var server = require('http').createServer(app);
 
+console.log('HMMM')
 // const React = require('react');
 // const ReactDOMServer = require('react-dom/server');
 // const StaticRouter = require('react-router').StaticRouter;
