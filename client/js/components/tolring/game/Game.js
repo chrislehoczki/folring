@@ -32,8 +32,8 @@ export default class Game extends React.Component {
 
   handleClick(piece) {
     // If clicking on empty place, add new piece
-    if (this.state.board[piece] === 0) {
-      this.addPiece(piece)
+    if (this.state.board[piece] === 0) {  
+      this.addPiece(piece)      
     }
     // If clicking on existing own piece, select the piece
     if (this.state.board[piece] === this.state.me && !this.state.pieceSelected) {
@@ -45,7 +45,9 @@ export default class Game extends React.Component {
     }
     // If clicking on empty place and something was selected then move the piece
     if (this.state.board[piece] === 0 && this.state.pieceSelected) {
-      this.moveSelectedPieceTo(piece)
+      if (document.querySelector('#p'+piece).classList.contains("highlight")) {
+        this.moveSelectedPieceTo(piece)
+      }
     }
   }
 
@@ -68,7 +70,7 @@ export default class Game extends React.Component {
   }
 
   addPiece(piece) {
-    if (this.state.piecesLeft > 0) {
+    if (this.state.piecesLeft > 0 && !this.state.pieceSelected) {
       let nextBoard = [...this.state.board]
       nextBoard[piece] = this.state.me
       this.setState({...this.state, piecesLeft: (this.state.piecesLeft - 1), board: nextBoard })      
