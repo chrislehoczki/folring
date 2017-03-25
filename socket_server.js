@@ -4,9 +4,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-function socket(server) {
+function socket(server, app) {
 
-	var io = require('socket.io')(server);
+	app.io = require('socket.io')(server);
 
 	var rooms = {};
 
@@ -22,7 +22,7 @@ function socket(server) {
 	}
 
 	// handle incoming connections from clients
-	io.on('connection', function (socket) {
+	app.io.on('connection', function (socket) {
 
 		var currentRoomId = null;
 
@@ -32,7 +32,7 @@ function socket(server) {
 			if (currentRoomId) {
 				rooms[currentRoomId].messages.push(message);
 
-				io.to(currentRoomId).emit('message', message);
+				app.io.to(currentRoomId).emit('message', message);
 			}
 		});
 
@@ -50,15 +50,15 @@ function socket(server) {
 
 			socket.join(rooms[room].name);
 			currentRoomId = rooms[room].name;
-			var _io$sockets$adapter$r = io.sockets.adapter.rooms[room],
-			    sockets = _io$sockets$adapter$r.sockets,
-			    length = _io$sockets$adapter$r.length;
+			var _app$io$sockets$adapt = app.io.sockets.adapter.rooms[room],
+			    sockets = _app$io$sockets$adapt.sockets,
+			    length = _app$io$sockets$adapt.length;
 
 			// add client to room
 
 			rooms[room].players.push(user);
 
-			io.to(currentRoomId).emit('update_room', { room: rooms[room] });
+			app.io.to(currentRoomId).emit('update_room', { room: rooms[room] });
 		});
 
 		socket.on('leave_room', function (config) {
@@ -90,7 +90,7 @@ function socket(server) {
 			rooms[currentRoomId].game = _extends({}, rooms[currentRoomId].game, config);
 			console.log('CURRENT ROOM', rooms[currentRoomId]);
 			console.log(rooms);
-			io.to(currentRoomId).emit('update_room', { room: rooms[currentRoomId] });
+			app.io.to(currentRoomId).emit('update_room', { room: rooms[currentRoomId] });
 		});
 
 		// once a client has connected, we expect to get a ping from them saying what room they want to join

@@ -48,7 +48,7 @@ app.get('/', function (req, res) {
 // });
 
 
-socket(server);
+socket(server, app);
 
 if (process.env.NODE_ENV === 'development') {
   var webpackDevMiddleware = require('webpack-dev-middleware');
