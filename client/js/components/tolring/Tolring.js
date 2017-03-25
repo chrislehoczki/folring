@@ -17,6 +17,8 @@ export default class Tolring extends Component {
 		this.sendState = this.sendState.bind(this);
 	}
 
+
+
 	componentWillUnmount() {
 		// const user = window.localStorage.user;
 		const user = window.user;
@@ -26,8 +28,8 @@ export default class Tolring extends Component {
 	componentDidMount() {
 		window.socket.on('update_room', (room) => {
 			this.setState({...this.state, ...room}, () => {
-				console.log(this.state)
-			})
+				console.log("UPDATED ROOM STATE", this.state)
+			});
 	 	});
 	}
 

@@ -30,6 +30,17 @@ export default class Game extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+
+    if (nextProps.room) {
+      const newState = {...nextProps.room.game.game};
+      this.setState({...newState}, () => {
+        console.log("NEW STATE", this.state)
+      });
+    } 
+
+  }
+
   sendState() {
     this.props.sendState({...this.state})
   }
@@ -58,16 +69,16 @@ export default class Game extends React.Component {
     nextBoard[piece] = value
     this.setState({
       board: nextBoard
-    })
+    }, () => this.sendState())
   }
 
   selectPiece(piece) {
-    this.setState({...this.state, pieceSelected: true, selectedIndex: piece })
+    this.setState({...this.state, pieceSelected: true, selectedIndex: piece }, () => this.sendState())
     this.updatePiece(piece, this.state.meSelected)
   }
 
   unselectPiece(piece) {
-    this.setState({...this.state, pieceSelected: false, selectedIndex: null })
+    this.setState({...this.state, pieceSelected: false, selectedIndex: null }, () => this.sendState())
     this.updatePiece(piece, this.state.me)
   }
 
@@ -75,7 +86,7 @@ export default class Game extends React.Component {
     if (this.state.piecesLeft > 0) {
       let nextBoard = [...this.state.board]
       nextBoard[piece] = this.state.me
-      this.setState({...this.state, piecesLeft: (this.state.piecesLeft - 1), board: nextBoard })      
+      this.setState({...this.state, piecesLeft: (this.state.piecesLeft - 1), board: nextBoard }, () => this.sendState())     
     }
   }
 
@@ -91,7 +102,7 @@ export default class Game extends React.Component {
       pieceSelected: false, 
       selectedIndex: null,
       board: nextBoard
-    })
+    }, () => this.sendState())
   }
 
   render() {

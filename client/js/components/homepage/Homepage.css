@@ -2,9 +2,27 @@
 
 .room {
 	width: 150px;
-	height: 150px;
-	margin: 19px;
-	border-radius: 20px;
-	background: green;
-	display: inline-block;
+  height: 150px;
+  margin: 40px;
+  border-radius: 20px;
+  display: inline-block;
+  border: 4px solid deepskyblue;
+}
+
+button.join {
+  -webkit-appearance: none;
+  font-size: 28px;
+  padding: 15px 28px;
+  border-radius: 50px;
+  border: 4px solid deepskyblue;
+  background: transparent;
+  color: deepskyblue;
+  margin: 40px auto;
+  width: 340px;
+  display: block;
+}
+
+button:hover {
+  border-color: white;
+  color: white;
 }

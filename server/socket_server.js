@@ -79,9 +79,12 @@ function socket(server) {
 
 		});
 
-		socket.on('state', function(state) {
-			rooms[currentRoomId].state = state;
-			io.to(currentRoomId).emit('state', state);
+		socket.on('update_room', function(config) {
+			console.log("UPDATING STATE ON SERVER", config)
+			rooms[currentRoomId].game = {...rooms[currentRoomId].game, ...config};
+			console.log('CURRENT ROOM', rooms[currentRoomId])
+			console.log(rooms);
+			io.to(currentRoomId).emit('update_room', {room: rooms[currentRoomId]});
 		});
 
 
