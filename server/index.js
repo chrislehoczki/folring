@@ -49,7 +49,7 @@ app.get('/', function(req, res) {
 
 
 
-socket(server, app);
+socket(server);
 
 
 if (process.env.NODE_ENV === 'development') {
