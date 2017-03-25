@@ -52,7 +52,7 @@ li {
 }
 
 .piece.highlight:hover {
-  border: 4px dotted #222;
+  background: deepskyblue;
 }
 
 .piece.hunting {
