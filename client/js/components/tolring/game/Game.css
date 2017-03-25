@@ -1,0 +1,91 @@
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-family: "Helvetica";
+	font-size: 12px;
+}
+
+.board {
+  text-align: center;
+  background: #ccc;
+  padding: 60px;
+  width: 640px;
+  height: 640px;
+  background: url('/client/images/fol.jpg');
+  background-size: contain;
+  background-position: 0 0;
+  position: relative;
+}
+
+.piece {
+  position: absolute;
+  width: 10%;
+  height: 10%;
+  cursor: pointer;
+  line-height: 31px;
+  padding: 9px 16px;
+  margin-right: 1px;
+  border-radius: 50%;
+}
+
+.piece.empty {
+  background: transparent;
+}
+
+.piece.selected {
+  background: #ff9900 !important;
+  transition: 0.5s;
+}
+
+.piece.white {
+  background: white;
+  box-shadow: inset -10px -8px 30px #999, 0px 10px 15px #222;
+}
+
+.piece.black {
+  background: black;
+}
+
+.piece:nth-child(1) { left: calc(45%); top: 4%; }
+.piece:nth-child(2) { top: 11%; left: 33.5%; }
+.piece:nth-child(3) { top: 11%; left: 56.5%; }
+.piece:nth-child(4) { top: 17.8%; left: 21.7%; }
+.piece:nth-child(5) { top: 17.8%; left: 45%; }
+.piece:nth-child(6) { top: 17.8%; left: 68.5%; }
+.piece:nth-child(7) { top: 24.6%; left: 10.2%; }
+.piece:nth-child(8) { top: 24.6%; left: 33.5%; }
+.piece:nth-child(9) { top: 24.6%; left: 56.5%; }
+.piece:nth-child(10) { top: 24.6%; left: 80.2%; }
+.piece:nth-child(11) { top: 31.2%; left: 21.5%; }
+.piece:nth-child(12) { top: 31.2%; left: 45%; }
+.piece:nth-child(13) { top: 31.2%; left: 68.5%; }
+.piece:nth-child(14) { top: 17.8%; left: 45%; }
+.piece:nth-child(15) { top: 37.9%; left: 10%; }
+.piece:nth-child(16) { top: 37.9%; left: 33.5%; }
+.piece:nth-child(17) { top: 37.9%; left: 56.5%; }
+.piece:nth-child(18) { top: 37.9%; left: 80.2%; }
+.piece:nth-child(19) { top: 45%; left: 21.7%; }
+.piece:nth-child(20) { top: 45%; left: 45%; }
+.piece:nth-child(21) { top: 45%; left: 68.5%; }
+.piece:nth-child(22) { top: 51.5%; left: 10.2%;  }
+.piece:nth-child(23) { top: 51.5%; left: 33.5%;  }
+.piece:nth-child(24) { top: 51.5%; left: 56.5%;  }
+.piece:nth-child(25) { top: 51.5%; left: 80.2%; }
+.piece:nth-child(26) { top: 58%; left: 21.7% }
+.piece:nth-child(27) { top: 58%; left: 45%;  }
+.piece:nth-child(28) { top: 58%; left: 68.5% }
+.piece:nth-child(29) { top: 65%; left: 10.2%; }
+.piece:nth-child(30) { top: 65%; left: 33.5%; }
+.piece:nth-child(31) { top: 65%; left: 56.5%; }
+.piece:nth-child(32) { top: 65%; left: 80.2%; }
+.piece:nth-child(33) { top: 72%; left: 21.7%; }
+.piece:nth-child(34) { top: 72%; left: 45%; }
+.piece:nth-child(35) { top: 72%; left: 68.5%; }
+.piece:nth-child(36) { top: 78.6%; left: 33.5%; }
+.piece:nth-child(37) { top: 78.6%; left: 56.5%; }
+.piece:nth-child(38) { top: 85.2%; left: 45%; }
+
+
+

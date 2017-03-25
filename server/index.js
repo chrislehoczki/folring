@@ -87,11 +87,13 @@ function createPage() {
 	<html lang="en">
 	<head>
 	    <meta charset="utf-8">
-	    <title>Builder - Fun Academy</title>
-      	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-      	<div id="root"></div>
-		<script type="text/javascript" src="/bundle.js"></script>
+	    <title>Folring</title>
+      <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+  </head>
 	<body>
+    <div id="root"></div>
+    <script type="text/javascript" src="/bundle.js"></script>
 	</body>
 	</html>`;
 
