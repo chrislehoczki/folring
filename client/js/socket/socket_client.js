@@ -8,7 +8,7 @@ export function socket() {
 	if (process.env.NODE_ENV === 'production') {
 		url = 'http://tolring.azurewebsites.net/'
 	}
-	console.log('URL', url)
+
 	var socket = require('socket.io-client')(url);
 
 
