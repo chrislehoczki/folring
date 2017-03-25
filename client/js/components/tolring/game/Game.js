@@ -30,6 +30,10 @@ export default class Game extends React.Component {
     }
   }
 
+  sendState() {
+    this.props.sendState({...this.state})
+  }
+
   handleClick(piece) {
     // If clicking on empty place, add new piece
     if (this.state.board[piece] === 0) {

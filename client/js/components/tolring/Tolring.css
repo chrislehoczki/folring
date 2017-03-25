@@ -30,3 +30,17 @@
 	width: 20px;
 	height: 20px;
 }
+
+#users {
+	position: fixed;
+	top: 50px;
+	right: 50px;
+	text-align: center;
+	border: 1px solid black;
+	padding: 5px;
+	border-radius: 5px;
+}
+
+#users .user {
+
+}

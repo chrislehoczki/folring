@@ -10,8 +10,8 @@ export default class NameChecker extends Component {
 	}
 
 	addUser(e) {
+		// window.localStorage.setItem('user', e.target.value)
 		window.user = e.target.value;
-		console.log(window.user);
 	}
 
 	render() {
