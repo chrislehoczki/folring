@@ -41,7 +41,6 @@ export default class Folring extends Component {
 	render() {
 		return (
 			<div>
-				<h1>Folring lives!</h1>
 				<Users players={this.state.room.players}/>
 				<Game sendState={this.sendState} room={this.state.room}/>
 				<Messaging />

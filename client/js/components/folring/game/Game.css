@@ -8,11 +8,12 @@ html {
 }
 
 body {
-  background: #1f1a17;
+  /*background: #1f1a17;*/
+  background: #957e53;
 }
 
 a {
-  color: deepskyblue;
+  color: rgb(108, 91, 60);
   text-decoration: none;
   font-size: 24px;
   display: inline-block;
@@ -24,16 +25,29 @@ li {
 }
 
 .board {
+  position: relative;
   text-align: center;
-  background: #ccc;
   padding: 60px;
   width: 640px;
   height: 640px;
   margin: auto;
-  background: url('/client/images/fol.jpg');
+}
+
+.board .background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /*background: url('/client/images/fol.jpg');
   background-size: contain;
   background-position: 0 0;
-  position: relative;
+  position: relative;*/
+  background-image: url(/client/images/flower_of_life.svg);
+  background-size: 528px;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.28;
 }
 
 .piece {
@@ -52,7 +66,8 @@ li {
 }
 
 .piece.highlight:hover {
-  background: deepskyblue;
+  background: rgb(108, 91, 60);
+  opacity: 0.5;
 }
 
 .piece.hunting {
@@ -60,16 +75,18 @@ li {
 
 .piece.selected {
   -webkit-filter: brightness(1.6);
+  border: 4px solid rgb(108, 91, 60);
   transition: 0.5s;
 }
 
 .piece.white {
   background: white;
-  box-shadow: inset -10px -8px 30px #999, 0px 10px 15px #222;
+  box-shadow: inset -10px -8px 30px #999, 0px 5px 12px rgba(34, 34, 34, 0.5);
 }
 
 .piece.black {
-  background: black;
+  box-shadow: inset -10px -8px 30px #000, 0px 5px 12px rgba(34, 34, 34, 0.5);
+  background: #333;
 }
 
 .piece:nth-child(1) { left: calc(45%); top: 4%; }
