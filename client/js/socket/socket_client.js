@@ -4,7 +4,12 @@
 
 export function socket() {
 	// play with socket.io here
-var socket = require('socket.io-client')('http://localhost:3000');
+	let url = 'http://localhost:3000'
+	if (process.env.NODE_ENV === 'production') {
+		url = 'http://tolring.azurewebsites.net/'
+	}
+
+	var socket = require('socket.io-client')(url);
 
 
 socket.on('connect', function(){

@@ -1,6 +1,8 @@
 function socket(server) {
-
-	var io = require('socket.io')(server);
+	const options = {
+		'transports': ['websockets']
+	}
+	var io = require('socket.io', options)(server);
 
 	const rooms = {};
 

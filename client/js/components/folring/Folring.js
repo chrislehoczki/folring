@@ -31,6 +31,13 @@ export default class Folring extends Component {
 				console.log("UPDATED ROOM STATE", this.state)
 			});
 	 	});
+
+	 	window.addEventListener("beforeunload", (ev) => 
+		{  
+		    ev.preventDefault();
+		    window.socket.emit('leave_room', {user: window.user});
+		    return ev.returnValue = 'Are you sure you want to close?';
+		});
 	}
 
 	sendState(state) {

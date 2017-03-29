@@ -5,8 +5,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function socket(server) {
-
-	var io = require('socket.io')(server);
+	var options = {
+		'transports': ['websockets']
+	};
+	var io = require('socket.io', options)(server);
 
 	var rooms = {};
 
