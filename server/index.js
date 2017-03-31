@@ -16,7 +16,9 @@ console.log('HMMM')
 // import App from '../client/js/components/App';
 // const ReactApp = require('../client/js/components/App');
 
-const socket = require('./socket_server');
+// const socket = require('./socket_server');
+
+const Folring = require('./socket_server');
 
 app.use('/client', express.static(process.cwd() + '/client'));
 app.use('/dist', express.static(process.cwd() + '/dist'));
@@ -48,8 +50,8 @@ app.get('/', function(req, res) {
 // });
 
 
-
-socket(server);
+new Folring(server);
+// socket(server);
 
 
 if (process.env.NODE_ENV === 'development') {
@@ -73,7 +75,7 @@ if (process.env.NODE_ENV === 'development') {
     // reload(server, app);
   }
 
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 5000;
 server.listen(PORT, (error) => {
   if (error) {
     console.error(error);

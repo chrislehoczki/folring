@@ -13,6 +13,7 @@ socket().then(() => {
   , document.querySelector('#root'));
 
 }).catch((err) => {
-	console.log('couldnt access socket')
+	console.log(err);
+	console.log('couldnt access socket or render react')
 });
 

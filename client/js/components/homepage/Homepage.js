@@ -9,16 +9,12 @@ export default class Homepage extends Component {
 
 	constructor(props) {
 		super(props);
-		// const user = window.localStorage.user;
-		const user = window.user;
 		this.state = {
-			showNameChecker: user ? false : true,
-			showRooms: user ? true: false
+			showNameChecker: this.props.user ? false : true,
+			showRooms: this.props.user ? true : false
 		}
 		this.goToRooms = this.goToRooms.bind(this);
 	}
-
-	
 
 	goToRooms() {
 		this.setState({showNameChecker: false, showRooms: true})
@@ -29,13 +25,9 @@ export default class Homepage extends Component {
 		
 		let roomComponents = null;
 		if (this.state.showRooms && rooms) {
-			const roomKeys = Object.keys(this.state.rooms);
-			roomComponents = roomKeys.map((roomId) => <Room key={roomId} roomId={roomId} history={this.props.history}/>)
+			const roomKeys = Object.keys(this.props.rooms);
+			roomComponents = roomKeys.map((roomId) => <Room user={this.props.user} key={roomId} roomId={roomId} history={this.props.history}/>)
 		} 
-
-		if (!rooms) {
-			roomComponents = <h1>Populating Rooms</h1>
-		}
 
 		return (
 			<div>

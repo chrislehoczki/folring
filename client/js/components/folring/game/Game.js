@@ -24,8 +24,9 @@ export default class Game extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.room) {
-      const newState = {...nextProps.room.game.game};
+    if (nextProps.room.game) {
+      const newState = {...nextProps.room.game};
+      console.log('NEW GAME OBJECT', newState)
       this.setState({...newState}, () => {
         console.log("NEW STATE", this.state)
       });
@@ -33,7 +34,7 @@ export default class Game extends React.Component {
   }
 
   sendState() {
-    this.props.sendState({...this.state})
+    this.props.sendGame({game: this.state})
   }
 
   handleClick(piece) {

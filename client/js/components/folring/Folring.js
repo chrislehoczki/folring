@@ -11,45 +11,59 @@ export default class Folring extends Component {
 		super(props);
 		this.state = {
 			room: {
-				players: []
+				players: [],
+				spectators: [],
+				game: null
 			}
 		};
-		this.sendState = this.sendState.bind(this);
+		this.sendGame = this.sendGame.bind(this);
 	}
 
 
 
 	componentWillUnmount() {
+		
+	}
+
+	leaveGame() {
 		// const user = window.localStorage.user;
-		const user = window.user;
-		window.socket.emit('leave_room', {user});
+		const user = this.props.user;
+
+		window.socket.emit('leave_room', { user });
+		this.props.history.push('/');
 	}
 
 	componentDidMount() {
+
 		window.socket.on('update_room', (room) => {
-			this.setState({...this.state, ...room}, () => {
-				console.log("UPDATED ROOM STATE", this.state)
+			console.log("NEW ROOM OBJECT RECEIVED", room)
+			const newRoom = {...this.state.room, ...room};
+			console.log('NEW ROOM OBJECT', newRoom.room)
+
+			this.setState({room: newRoom}, () => {
+				console.log('NEW ROOM STATE', this.state.room)
 			});
 	 	});
 
-	 	window.addEventListener("beforeunload", (ev) => 
-		{  
-		    ev.preventDefault();
-		    window.socket.emit('leave_room', {user: window.user});
-		    return ev.returnValue = 'Are you sure you want to close?';
-		});
+	 // 	window.addEventListener("beforeunload", (ev) => 
+		// {  
+		//     ev.preventDefault();
+		//     window.socket.emit('leave_room', {user: window.user});
+		//     return ev.returnValue = 'Are you sure you want to close?';
+		// });
 	}
 
-	sendState(state) {
-		window.socket.emit('update_room', {game: state})
+	sendGame(game) {
+		window.socket.emit('update_room', game , this.props.user);
 	}
 
 	render() {
 		return (
-			<div>
+			<div className="game-holder">
+				<button onClick={this.leaveGame.bind(this)}>Leave Game</button>
 				<Users players={this.state.room.players}/>
-				<Game sendState={this.sendState} room={this.state.room}/>
-				<Messaging />
+				<Game sendGame={this.sendGame} room={this.state.room}/>
+				<Messaging user={this.props.user} />
 			</div>
 		);
 	}
