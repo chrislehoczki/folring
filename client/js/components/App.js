@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
   Route,
   Link
 } from 'react-router-dom'
+
+
 
 import Homepage from './homepage/Homepage';
 import Profile from './profile/Profile';
@@ -19,15 +21,43 @@ import Nav from './nav/Nav.js';
 //   )}/>
 // )
 
-const RouteConfigExample = () => (
-  <Router>
-    <div>
-      <Nav />
-    	<Route exact path="/" component={Homepage}/>
-    	<Route path="/profile" component={Profile}/>
-    	<Route path="/Folring" component={Folring}/>
-    </div>
-  </Router>
-)
+class RouteConfigExample extends Component {
+
+ constructor(props) {
+    super(props);
+    this.state = {
+      rooms: null
+    }
+  }
+  
+  componentDidMount() {
+    window.socket.on('update_room', (room) => {
+      console.log('receiving room state in homepage')
+    });
+
+    window.socket.on('send_all_rooms', (rooms) => {
+      console.log('RECIEINV ROOMS')
+      console.log(rooms)
+      this.setState({rooms: rooms})
+    });
+
+
+  }
+
+
+  render() {
+    return (
+        <Router>
+          <div>
+            <Nav />
+            <Route exact path="/" component={Homepage} rooms={this.state.rooms}/>
+            <Route path="/profile" component={Profile}/>
+            <Route path="/Folring" component={Folring}/>
+          </div>
+        </Router>
+      )
+  }
+ 
+}
 
 export default RouteConfigExample

@@ -41,7 +41,6 @@ export default class Folring extends Component {
 	}
 
 	sendState(state) {
-		console.log(state);
 		window.socket.emit('update_room', {game: state})
 	}
 

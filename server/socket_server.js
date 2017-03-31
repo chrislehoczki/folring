@@ -23,16 +23,7 @@ function socket(server) {
 
 		var currentRoomId = null;
 
-		socket.on('message', function(message) {
-			console.log('MESSAGE', message)
-			console.log('CURRENT ROOM', currentRoomId)
-			if (currentRoomId) {
-				rooms[currentRoomId].messages.push(message);
-			
-				io.to(currentRoomId).emit('message', message);
-			}
-			
-		});
+		io.emit('send_all_rooms', rooms);
 
 		socket.on('join_room', function(config) {
 			console.log('CONFIG', config)
@@ -53,8 +44,12 @@ function socket(server) {
 	    	// add client to room
 	    	rooms[room].players.push(user); 
 
-	    	io.to(currentRoomId).emit('update_room', {room: rooms[room]});
+	    	// io.to(currentRoomId).emit('update_room', {room: rooms[room]});
+	    	io.emit('update_room', {room: rooms[room]});
+
 		});
+
+
 
 		socket.on('leave_room', function(config) {
 			console.log('leaving room now', config)
@@ -77,8 +72,6 @@ function socket(server) {
 				socket.leave(room);
 			}
 
-
-
 		});
 
 		socket.on('update_room', function(config) {
@@ -86,10 +79,20 @@ function socket(server) {
 			rooms[currentRoomId].game = {...rooms[currentRoomId].game, ...config};
 			console.log('CURRENT ROOM', rooms[currentRoomId])
 			console.log(rooms);
-			io.to(currentRoomId).emit('update_room', {room: rooms[currentRoomId]});
+			// io.to(currentRoomId).emit('update_room', {room: rooms[currentRoomId]});
+			io.emit('update_room', {room: rooms[currentRoomId]});
 		});
 
-
+		socket.on('message', function(message) {
+			console.log('MESSAGE', message)
+			console.log('CURRENT ROOM', currentRoomId)
+			if (currentRoomId) {
+				rooms[currentRoomId].messages.push(message);
+			
+				io.to(currentRoomId).emit('message', message);
+			}
+			
+		});
 
 		
 

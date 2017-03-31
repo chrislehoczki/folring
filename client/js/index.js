@@ -7,8 +7,12 @@ import ReactDOM from 'react-dom';
 import BasicExample from './components/App.js';
 import { socket } from './socket/socket_client';
 
-socket();
-
-ReactDOM.render(
+socket().then(() => {
+	ReactDOM.render(
   	<BasicExample />
   , document.querySelector('#root'));
+
+}).catch((err) => {
+	console.log('couldnt access socket')
+});
+

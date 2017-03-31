@@ -12,25 +12,35 @@ export default class Homepage extends Component {
 		// const user = window.localStorage.user;
 		const user = window.user;
 		this.state = {
-			nameChecker: user ? false : true,
-			rooms: user ? true: false
+			showNameChecker: user ? false : true,
+			showRooms: user ? true: false
 		}
 		this.goToRooms = this.goToRooms.bind(this);
 	}
 
+	
+
 	goToRooms() {
-		this.setState({nameChecker: false, rooms: true})
+		this.setState({showNameChecker: false, showRooms: true})
 	}
 
 	render() {
-		const rooms = [0, 1, 2, 3, 4];
+		const rooms = this.props.rooms;
+		
+		let roomComponents = null;
+		if (this.state.showRooms && rooms) {
+			const roomKeys = Object.keys(this.state.rooms);
+			roomComponents = roomKeys.map((roomId) => <Room key={roomId} roomId={roomId} history={this.props.history}/>)
+		} 
 
-		const roomComponents = rooms.map((room) => <Room key={room} roomId={`room_${room + 1}`} history={this.props.history}/>)
+		if (!rooms) {
+			roomComponents = <h1>Populating Rooms</h1>
+		}
 
 		return (
 			<div>
-				{this.state.nameChecker ? <NameChecker goToRooms={this.goToRooms} /> : null }
-				{this.state.rooms ? roomComponents : null}
+				{this.state.showNameChecker ? <NameChecker goToRooms={this.goToRooms} /> : null }
+				{roomComponents}
 			</div>
 		);
 	}
