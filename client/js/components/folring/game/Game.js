@@ -14,31 +14,22 @@ export default class Game extends React.Component {
       me: 10,
       meSelected: 11,
       piecesLeft: 18,
-      board: [
-           0,         // 0 - empty slot
-          0,0,        // 10 - player 1 piece
-         0,0,0,       // 11 - player 1 piece selected
-        0,0,0,0,      // 20 - player 2 piece
-         0,0,0,       // 21 - player 2 piece selected
-        0,0,0,0,
-         0,0,0,
-        0,0,0,0,
-         0,0,0,
-          0,0,
-           0,0,0,0,0,0,0,0
-      ]
+      board: [0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+      // 0 - empty slot
+      // 10 - player 1 piece
+      // 11 - player 1 piece selected
+      // 20 - player 2 piece
+      // 21 - player 2 piece selected
     }
   }
 
   componentWillReceiveProps(nextProps) {
-
     if (nextProps.room) {
       const newState = {...nextProps.room.game.game};
       this.setState({...newState}, () => {
         console.log("NEW STATE", this.state)
       });
     } 
-
   }
 
   sendState() {
@@ -194,7 +185,6 @@ export default class Game extends React.Component {
       36:[31,25,33]
     }
     huntingZone[piece].map((piece, index) => {
-      console.log("YOOO", piece)
       document.querySelector('#p'+piece).classList.add("hunting")
     })
   }
@@ -213,6 +203,7 @@ export default class Game extends React.Component {
     const neighbors = this.state.pieceSelected ? this.highlightNeighbours(this.state.selectedIndex) : this.clearHghlights()
     return (
       <div className="board">
+        <div className="background"></div>
         {pieces}
       </div>
     )

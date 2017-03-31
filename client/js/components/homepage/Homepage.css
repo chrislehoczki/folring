@@ -6,8 +6,8 @@
   margin: 40px;
   border-radius: 20px;
   display: inline-block;
-  border: 4px solid deepskyblue;
-  color: deepskyblue;
+  border: 4px solid rgb(108, 91, 60);
+  color: rgb(108, 91, 60);
   text-align: center;
   margin: 20px 0;
 }
@@ -17,9 +17,9 @@ button.join {
   font-size: 28px;
   padding: 15px 28px;
   border-radius: 50px;
-  border: 4px solid deepskyblue;
+  border: 4px solid rgb(108, 91, 60);
   background: transparent;
-  color: deepskyblue;
+  color: rgb(108, 91, 60);
   margin: 40px auto;
   width: 340px;
   display: block;
