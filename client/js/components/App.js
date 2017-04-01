@@ -7,7 +7,7 @@ import {
 
 import Homepage from './homepage/Homepage';
 import Profile from './profile/Profile';
-import Folring from './Folring/Folring';
+import Folring from './folring/Folring';
 import Nav from './nav/Nav.js';
 
 

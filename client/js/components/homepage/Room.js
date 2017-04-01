@@ -1,7 +1,7 @@
 
 
 import React, { Component } from 'react';
-
+import MiniFolring from '../minifolring/MiniFolring';
 
 export default class Room extends Component {
 
@@ -20,7 +20,9 @@ export default class Room extends Component {
 	render() {
 		const room = this.props.room;
 		return (
-			<div  className="room">
+			<div className="room">
+			
+				<MiniFolring room={room}/>
 				<p>{room.id}</p>
 				<p>Player 1: {room.players[0] ? room.players[0].username : <button onClick={this.joinRoom.bind(this, 0)}>Join</button>}</p>
 				<p>Player 2: {room.players[1] ? room.players[1].username : <button onClick={this.joinRoom.bind(this, 1)}>Join</button>}</p>

@@ -4,9 +4,9 @@
 	width: 150px;
   height: 150px;
   margin: 40px;
-  border-radius: 20px;
   display: inline-block;
-  border: 4px solid rgb(108, 91, 60);
+  /*border-radius: 20px;
+  border: 4px solid rgb(108, 91, 60);*/
   color: rgb(108, 91, 60);
   text-align: center;
   margin: 20px 0;

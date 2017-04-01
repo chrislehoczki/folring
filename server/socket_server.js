@@ -21,7 +21,7 @@ class Folring {
 
 		// setup rooms
 		const rooms = {};
-		for (var i = 0; i < 5; i++) {
+		for (var i = 0; i < 50; i++) {
 			rooms[`room_${i+1}`] = {
 				id: `room_${i+1}`,
 				messages: [],
