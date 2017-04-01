@@ -6,10 +6,9 @@ import React, { Component } from 'react';
 export default class Room extends Component {
 
 	joinRoom(playerNo, e) {
-		console.log('player NUmber', playerNo);
 		const user = this.props.user;
 		window.socket.emit('join_room', {room: this.props.room.id, user, player: playerNo});
-		this.props.history.push('/Folring');
+		this.props.history.push('/folring');
 	}
 
 	spectateRoom() {
@@ -17,7 +16,6 @@ export default class Room extends Component {
 	}
 
 	render() {
-		console.log('RECEIVING ROOM', this.props.room);
 		const room = this.props.room;
 		return (
 			<div  className="room">

@@ -46,9 +46,30 @@ class Folring {
 			socket.on('update_room', (roomConfig, user) => this.updateGame(roomConfig, user))
 
 			socket.on('message', (message, user) => this.sendMessage(message, user));
+
+            socket.on('spectate_room', (config) => this.spectateRoom(socket, config));
 		
 		});
 
+    }
+
+
+    spectateRoom(config) {
+        console.log('SPECTATING ROOM')
+        const room = config.room;
+        const user = config.user;
+        if (!room) {
+            return;
+        }
+
+        socket.join(this.rooms[room].id);
+        
+        // update user
+        this.addPlayerToRoom(this.rooms[room].id, user.id);
+
+        const { sockets, length } = this.io.sockets.adapter.rooms[room];
+        console.log(this.rooms[room])
+        this.io.emit('update_room', this.rooms[room]);
     }
 
     updateGame(roomConfig, user) {
@@ -150,6 +171,16 @@ class Folring {
 
     	this.rooms = newRooms;
     }
+
+    addSpectatorToRoom(roomId, userId) {
+        const index = this.rooms[roomId].spectators.findIndex((user) => user.id === userId);
+        const user = this.getUser(userId);
+        const newSpectators = [...this.rooms[roomId].players.slice(0, index), user, ...this.rooms[roomId].players.slice(index + 1)];
+        this.updateRoom(roomId, {spectators: newSpectators})
+        this.updateUser(userId, {currentRoom: roomId})
+    }
+
+
 
     addPlayerToRoom(roomId, userId) {
     	const index = this.rooms[roomId].players.findIndex((user) => user.id === userId);

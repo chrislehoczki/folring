@@ -10,6 +10,8 @@ import Profile from './profile/Profile';
 import Folring from './Folring/Folring';
 import Nav from './nav/Nav.js';
 
+
+
 class RouteConfigExample extends Component {
 
  constructor(props) {
@@ -18,25 +20,32 @@ class RouteConfigExample extends Component {
       rooms: null,
       user: null
     }
+
+    this.HomepageWrapper = (props) => {
+    return <Homepage {...props} rooms={this.state.rooms} user={this.state.user} />
+    }
+
+    this.ProfileWrapper = (props) => {
+       return <Profile {...props} user={this.state.user} />
+    }
+
+    this.FolringWrapper = (props) => {
+      return <Folring history={props.history} user={this.state.user} />
+   }
   }
 
   componentDidMount() {
     window.socket.on('update_room', (room) => {
-      // console.log('receiving room state in homepage')
-      // // should sort update global rooms here
-      // const newRooms = { ...this.state.rooms };
-      // newRooms[room.id] = room;
-      // console.log('NEW ROOMS', newRooms)
-      // this.setState({rooms: newRooms});
+      const newRooms = { ...this.state.rooms };
+      newRooms[room.id] = room;
+      this.setState({rooms: newRooms});
     });
 
     window.socket.on('send_all_rooms', (rooms) => {
-      console.log('RECEIVING ROOMS IN APP')
       this.setState({rooms: rooms})
     });
 
     window.socket.on('user', (user) => {
-      console.log('USER RECEIVED', user)
       this.setState({user: user});
     });
 
@@ -46,26 +55,16 @@ class RouteConfigExample extends Component {
 
   render() {
 
-    const HomepageWrapper = (props) => {
-        return <Homepage {...props} rooms={this.state.rooms} user={this.state.user} />
-    }
 
-    const ProfileWrapper = (props) => {
-       return <Profile {...props} user={this.state.user} />
-    }
-
-    const FolringWrapper = (props) => {
-      return <Folring history={props.history} user={this.state.user} />
-    }
 
 
     return (
         <Router>
           <div>
             <Nav user={this.state.user}/>
-            <Route exact path="/" component={HomepageWrapper}/>
-            <Route path="/profile" component={ProfileWrapper}/>
-            <Route path="/Folring" component={FolringWrapper}/>
+            <Route exact path="/" component={this.HomepageWrapper}/>
+            <Route path="/profile" component={this.ProfileWrapper}/>
+            <Route path="/folring" component={this.FolringWrapper} />
           </div>
         </Router>
       )

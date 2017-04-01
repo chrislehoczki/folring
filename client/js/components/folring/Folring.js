@@ -20,10 +20,7 @@ export default class Folring extends Component {
 		this.updateRoom = this.updateRoom.bind(this);
 	}
 
-	componentWillUnmount() {
-		
-	}
-
+	
 	leaveGame() {
 		// const user = window.localStorage.user;
 		const user = this.props.user;
@@ -33,7 +30,8 @@ export default class Folring extends Component {
 	}
 
 	componentDidMount() {
-
+		console.log('MOUNTED TOLRING')
+		this.mounted = true;
 		window.socket.on('update_room', this.updateRoom);
 
 
@@ -45,14 +43,16 @@ export default class Folring extends Component {
 		// });
 	}
 
+
 	updateRoom(room) {
-			console.log('NEW ROOM RECEIVED', room)
 			const newRoom = {...this.state.room, ...room};
-			console.log('SAVING THIS AS STATE', newRoom)
 			this.setState({room: newRoom});
+			
 	}
 
 	componentWillUnmount() {
+		console.log('UNMOUNTING TOLRING')
+		this.mounted = false;
 		window.socket.removeListener('update_room', this.updateRoom)
 	}
 
