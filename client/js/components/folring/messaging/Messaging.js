@@ -12,26 +12,29 @@ export default class Messaging extends Component {
 		this.state = {
 			messages: [{user: 'admin', message: 'You can speak to eachother here.'}]
 		}
+		this.sendMessage = this.sendMessage.bind(this);
 		this.addMessage = this.addMessage.bind(this);
-
 		
 	}
 
 
 	componentDidMount() {
-		window.socket.on('message', (message) => {
-			console.log('RECEIVED MESSAGE', message)
-			const messages = [...this.state.messages, message];
-			console.log('NEW MESSAGES')
-			this.setState({messages}, () => {
-				console.log(this.state.messages)
-			})
-	 	});
+		window.socket.on('message', this.addMessage);
+	}
+
+	addMessage(message) {
+		const messages = [...this.state.messages, message];
+		this.setState({messages})
 	}
 
 
+	componentWillUnmount() {
+		window.socket.removeListener('message', this.addMessage)
+	}
 
-	addMessage(message) {		
+
+	sendMessage(message) {	
+		console.log('EMITTING MESSAGE')	
 		window.socket.emit('message', message, this.props.user );
 	}
 
@@ -42,7 +45,7 @@ export default class Messaging extends Component {
 		return (
 			<div id='messaging'>
 			{messages}
-			<MessageInput addMessage={this.addMessage} />
+			<MessageInput sendMessage={this.sendMessage} />
 			</div>
 		);
 	}

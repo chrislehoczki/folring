@@ -4,16 +4,17 @@ import React, { Component } from 'react';
 
 export default class MessageInput extends Component {
 
-	addMessage() {
+	sendMessage() {
 		const value = this.refs.input.value;
-		this.props.addMessage(value);
+		console.log('sending message')
+		this.props.sendMessage(value);
 	}
 
 	render() {
 		return (
 			<div id="message-input">
 				<input ref="input" />
-				<button onClick={this.addMessage.bind(this)} />
+				<button onClick={this.sendMessage.bind(this)} />
 			</div>
 		);
 	}
