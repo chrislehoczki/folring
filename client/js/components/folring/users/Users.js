@@ -7,11 +7,11 @@ export default class Users extends Component {
 		let players = null;
 		let spectators = null;
 		if (this.props.players) {
-			players = this.props.players.map((user, i) => <User key={i} number={i} user={user.username} />)
+			players = this.props.players.map((user, i) => <User userType="player" key={i} number={i} user={user.username} />)
 		}
 
 		if (this.props.spectators) {
-			spectators = this.props.spectators.map((user, i) => <User key={i} number={i} user={user.username} />)
+			spectators = this.props.spectators.map((user, i) => <User userType="spectator" key={i} number={i} user={user.username} />)
 		}
 		
 		return (
