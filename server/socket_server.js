@@ -5,6 +5,7 @@ class User {
 		this.username = userObject.username;
 		this.id = Date.now();
 		this.currentRoom = null;
+        this.spectatedRooms = [];
 		console.log('OUTPUT', this)
 	}
 }
@@ -41,21 +42,24 @@ class Folring {
 			
 			socket.on('join_room', (config) => this.joinRoom(socket, config));
 
-			socket.on('leave_room', (config) => this.leaveRoom(socket, config));
+            socket.on('leave_room', (config) => this.leaveRoom(socket, config));
+
+            socket.on('spectate_room', (config) => this.spectateRoom(socket, config));
+
+			socket.on('unspectate_room', (config) => this.unSpectateRoom(socket, config));
 
 			socket.on('update_room', (roomConfig, user) => this.updateGame(roomConfig, user))
 
 			socket.on('message', (message, user) => this.sendMessage(message, user));
 
-            socket.on('spectate_room', (config) => this.spectateRoom(socket, config));
+            
 		
 		});
 
     }
 
-
-    spectateRoom(config) {
-        console.log('SPECTATING ROOM')
+    spectateRoom(socket, config) {
+        console.log('SPECTATING ROOM', config)
         const room = config.room;
         const user = config.user;
         if (!room) {
@@ -65,10 +69,26 @@ class Folring {
         socket.join(this.rooms[room].id);
         
         // update user
-        this.addPlayerToRoom(this.rooms[room].id, user.id);
+        this.addSpectatorToRoom(this.rooms[room].id, user.id);
 
         const { sockets, length } = this.io.sockets.adapter.rooms[room];
-        console.log(this.rooms[room])
+        console.log('UPDATED ROOM', this.rooms[room])
+        this.io.emit('update_room', this.rooms[room]);
+    }
+
+     unSpectateRoom(socket, config) {
+        const room = config.roomId;
+        const user = config.user;
+
+        console.log("REMOVING SPECATORS", config)
+        // update socket
+        socket.leave(room);
+
+        // remove here
+        this.removeSpectatorFromRoom(room, user.id);
+
+        console.log('UPDATE_ROOM', this.rooms[room])
+        // send back to client
         this.io.emit('update_room', this.rooms[room]);
     }
 
@@ -173,14 +193,22 @@ class Folring {
     }
 
     addSpectatorToRoom(roomId, userId) {
-        const index = this.rooms[roomId].spectators.findIndex((user) => user.id === userId);
         const user = this.getUser(userId);
-        const newSpectators = [...this.rooms[roomId].players.slice(0, index), user, ...this.rooms[roomId].players.slice(index + 1)];
+        const newSpectators = [...this.rooms[roomId].spectators, user];
         this.updateRoom(roomId, {spectators: newSpectators})
-        this.updateUser(userId, {currentRoom: roomId})
+        this.updateUser(userId, {spectatedRooms: [...user.spectatedRooms, roomId]})
     }
 
+    removeSpectatorFromRoom(roomId, userId) {
+        const index = this.rooms[roomId].spectators.findIndex((user) => user.id === userId);
+        const newSpectators = [...this.rooms[roomId].spectators.slice(0, index), ...this.rooms[roomId].spectators.slice(index + 1)];
+        this.updateRoom(roomId, {spectators: newSpectators})
 
+        const spectatedRooms = [...this.getUser(userId).spectatedRooms];
+        const roomIndex = spectatedRooms.findIndex((id) => id === roomId);
+        const newSpectatedRooms = [...spectatedRooms.slice(0, roomIndex), ...spectatedRooms.slice(roomIndex + 1)]
+        this.updateUser(userId, {spectatedRooms: newSpectatedRooms})
+    }
 
     addPlayerToRoom(roomId, userId) {
     	const index = this.rooms[roomId].players.findIndex((user) => user.id === userId);

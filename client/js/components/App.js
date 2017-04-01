@@ -30,7 +30,7 @@ class RouteConfigExample extends Component {
     }
 
     this.FolringWrapper = (props) => {
-      return <Folring history={props.history} user={this.state.user} />
+      return <Folring {...props} user={this.state.user} />
    }
   }
 
@@ -48,16 +48,9 @@ class RouteConfigExample extends Component {
     window.socket.on('user', (user) => {
       this.setState({user: user});
     });
-
-
   }
 
-
   render() {
-
-
-
-
     return (
         <Router>
           <div>

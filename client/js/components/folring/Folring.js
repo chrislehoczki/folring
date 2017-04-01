@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import Messaging from './messaging/Messaging';
 import Game from './game/Game.js';
 import Users from './users/Users.js';
+
+import queryString from 'query-string';
 require('./Folring.css');
 
 export default class Folring extends Component {
@@ -24,14 +26,20 @@ export default class Folring extends Component {
 	leaveGame() {
 		// const user = window.localStorage.user;
 		const user = this.props.user;
-
-		window.socket.emit('leave_room', { user });
+		const parsedQuery = queryString.parse(this.props.location.search);
+		if (parsedQuery.userType === 'player') {
+			console.log("LEAVING PLAYER")
+			window.socket.emit('leave_room', { user });
+		} else {
+			console.log("LEAVING SPECTATOR")
+			window.socket.emit('unspectate_room', { user, roomId: this.state.room.id });
+		}
+		
 		this.props.history.push('/');
 	}
 
 	componentDidMount() {
 		console.log('MOUNTED TOLRING')
-		this.mounted = true;
 		window.socket.on('update_room', this.updateRoom);
 
 

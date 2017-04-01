@@ -8,11 +8,13 @@ export default class Room extends Component {
 	joinRoom(playerNo, e) {
 		const user = this.props.user;
 		window.socket.emit('join_room', {room: this.props.room.id, user, player: playerNo});
-		this.props.history.push('/folring');
+		this.props.history.push('/folring?userType=player');
 	}
 
 	spectateRoom() {
-		window.socket.emit('spectate_room', {room: this.props.room.id, user})
+		const user = this.props.user;
+		window.socket.emit('spectate_room', {room: this.props.room.id, user});
+		this.props.history.push('/folring?userType=spectator');
 	}
 
 	render() {
