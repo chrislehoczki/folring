@@ -17,6 +17,7 @@ export default class Folring extends Component {
 			}
 		};
 		this.sendGame = this.sendGame.bind(this);
+		this.updateRoom = this.updateRoom.bind(this);
 	}
 
 
@@ -35,15 +36,8 @@ export default class Folring extends Component {
 
 	componentDidMount() {
 
-		window.socket.on('update_room', (room) => {
-			console.log("NEW ROOM OBJECT RECEIVED", room)
-			const newRoom = {...this.state.room, ...room};
-			console.log('NEW ROOM OBJECT', newRoom.room)
+		window.socket.on('update_room', this.updateRoom);
 
-			this.setState({room: newRoom}, () => {
-				console.log('NEW ROOM STATE', this.state.room)
-			});
-	 	});
 
 	 // 	window.addEventListener("beforeunload", (ev) => 
 		// {  
@@ -51,6 +45,17 @@ export default class Folring extends Component {
 		//     window.socket.emit('leave_room', {user: window.user});
 		//     return ev.returnValue = 'Are you sure you want to close?';
 		// });
+	}
+
+	updateRoom(room) {
+			console.log('NEW ROOM RECEIVED', room)
+			const newRoom = {...this.state.room, ...room};
+			console.log('SAVING THIS AS STATE', newRoom)
+			this.setState({room: newRoom});
+	}
+
+	componentWillUnmount() {
+		window.socket.removeListener('update_room', this.updateRoom)
 	}
 
 	sendGame(game) {
