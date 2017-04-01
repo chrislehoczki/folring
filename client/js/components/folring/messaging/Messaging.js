@@ -14,7 +14,6 @@ export default class Messaging extends Component {
 		}
 		this.sendMessage = this.sendMessage.bind(this);
 		this.addMessage = this.addMessage.bind(this);
-		
 	}
 
 

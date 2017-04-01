@@ -20,8 +20,6 @@ export default class Folring extends Component {
 		this.updateRoom = this.updateRoom.bind(this);
 	}
 
-
-
 	componentWillUnmount() {
 		
 	}

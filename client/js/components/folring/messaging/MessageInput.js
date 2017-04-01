@@ -6,7 +6,7 @@ export default class MessageInput extends Component {
 
 	sendMessage() {
 		const value = this.refs.input.value;
-		console.log('sending message')
+		console.log('sending message');
 		this.props.sendMessage(value);
 	}
 

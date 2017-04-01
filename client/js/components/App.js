@@ -5,14 +5,10 @@ import {
   Link
 } from 'react-router-dom'
 
-
-
 import Homepage from './homepage/Homepage';
 import Profile from './profile/Profile';
 import Folring from './Folring/Folring';
 import Nav from './nav/Nav.js';
-
-
 
 class RouteConfigExample extends Component {
 
@@ -26,8 +22,12 @@ class RouteConfigExample extends Component {
 
   componentDidMount() {
     window.socket.on('update_room', (room) => {
-      console.log('receiving room state in homepage')
-      // should sort update global rooms here
+      // console.log('receiving room state in homepage')
+      // // should sort update global rooms here
+      // const newRooms = { ...this.state.rooms };
+      // newRooms[room.id] = room;
+      // console.log('NEW ROOMS', newRooms)
+      // this.setState({rooms: newRooms});
     });
 
     window.socket.on('send_all_rooms', (rooms) => {

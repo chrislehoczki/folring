@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import BasicExample from './components/App.js';
 import { socket } from './socket/socket_client';
 
+
 socket().then(() => {
 	ReactDOM.render(
   	<BasicExample />
