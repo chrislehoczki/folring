@@ -87,7 +87,7 @@ class Folring {
         // remove here
         this.removeSpectatorFromRoom(room, user.id);
 
-        console.log('UPDATE_ROOM', this.rooms[room])
+        console.log('updated room', this.rooms[room])
         // send back to client
         this.io.emit('update_room', this.rooms[room]);
     }
