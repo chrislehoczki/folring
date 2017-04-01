@@ -22,7 +22,7 @@ class Folring {
 		const rooms = {};
 		for (var i = 0; i < 5; i++) {
 			rooms[`room_${i+1}`] = {
-				name: `room_${i+1}`,
+				id: `room_${i+1}`,
 				messages: [],
 				game: [],
 				players: [],
@@ -121,10 +121,10 @@ class Folring {
 			this.socket.leave(currentRoom);
 			this.removePlayerFromRoom(currentRoom, user.id);
 		}
-    	socket.join(this.rooms[room].name);
+    	socket.join(this.rooms[room].id);
     	
     	// update user
-    	this.addPlayerToRoom(this.rooms[room].name, user.id);
+    	this.addPlayerToRoom(this.rooms[room].id, user.id);
 
     	const { sockets, length } = this.io.sockets.adapter.rooms[room];
     	console.log(this.rooms[room])

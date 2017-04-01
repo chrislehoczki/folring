@@ -26,7 +26,7 @@ export default class Homepage extends Component {
 		let roomComponents = null;
 		if (this.state.showRooms && rooms) {
 			const roomKeys = Object.keys(this.props.rooms);
-			roomComponents = roomKeys.map((roomId) => <Room user={this.props.user} key={roomId} roomId={roomId} history={this.props.history}/>)
+			roomComponents = roomKeys.map((roomId) => <Room user={this.props.user} key={roomId} room={this.props.rooms[roomId]} history={this.props.history}/>)
 		} 
 
 		return (
