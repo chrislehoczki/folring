@@ -9,7 +9,6 @@ export default class Piece extends React.Component {
 
   render() {
     let className
-
     switch (this.props.status) {
       case 0:
         className = "piece empty"
@@ -28,14 +27,8 @@ export default class Piece extends React.Component {
       break;
     }
 
-    // if (this.props.highlight) {
-    //   className = className + " highlight"
-    // }
-
     let idName = "p"+this.props.index
-
     return (
-
       <div id={idName} className={className} onClick={this.handleClick.bind(this)}></div>
     )
   }
