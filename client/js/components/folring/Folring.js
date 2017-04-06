@@ -11,11 +11,14 @@ export default class Folring extends Component {
 
 	constructor(props) {
 		super(props);
+		this.query = queryString.parse(this.props.location.search);
+
 		this.state = {
 			room: {
 				players: [],
 				spectators: [],
-				game: null
+				game: null,
+				id: this.query.roomId
 			}
 		};
 		this.sendGame = this.sendGame.bind(this);
@@ -26,8 +29,8 @@ export default class Folring extends Component {
 	leaveGame() {
 		// const user = window.localStorage.user;
 		const user = this.props.user;
-		const parsedQuery = queryString.parse(this.props.location.search);
-		if (parsedQuery.userType === 'player') {
+		
+		if (this.query.userType === 'player') {
 			console.log("LEAVING PLAYER")
 			window.socket.emit('leave_room', { user });
 		} else {
@@ -53,8 +56,14 @@ export default class Folring extends Component {
 
 
 	updateRoom(room) {
+		console.log(room.id);
+		console.log(this.state.room)
+		if (room.id === this.state.room.id) {
+
 			const newRoom = {...this.state.room, ...room};
 			this.setState({room: newRoom});
+		}
+		
 			
 	}
 

@@ -8,7 +8,7 @@ export default class Room extends Component {
 	joinRoom(playerNo, e) {
 		const user = this.props.user;
 		window.socket.emit('join_room', {room: this.props.room.id, user, player: playerNo});
-		this.props.history.push('/folring?userType=player');
+		this.props.history.push(`/folring?userType=player&roomId=${this.props.room.id}`);
 	}
 
 	spectateRoom() {
@@ -21,7 +21,6 @@ export default class Room extends Component {
 		const room = this.props.room;
 		return (
 			<div className="room">
-			
 				<MiniFolring room={room}/>
 				<p>{room.id}</p>
 				<p>Player 1: {room.players[0] ? room.players[0].username : <button onClick={this.joinRoom.bind(this, 0)}>Join</button>}</p>
