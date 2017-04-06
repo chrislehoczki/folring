@@ -14,7 +14,7 @@ export default class Game extends React.Component {
       me: 10,
       meSelected: 11,
       piecesLeft: 18,
-      board: [0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+      board: [0,0,0,20,0,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0]
       // 0 - empty slot
       // 10 - player 1 piece
       // 11 - player 1 piece selected
@@ -39,8 +39,17 @@ export default class Game extends React.Component {
 
   handleClick(piece) {
     // If clicking on empty place, add new piece
-    if (this.state.board[piece] === 0) {  
-      this.addPiece(piece)      
+    if (this.state.board[piece] === 0) {
+      if (document.querySelector('#p'+piece).classList.contains("jumpTo")) {
+        const eatFrom = this.getEdible({ from: this.state.selectedIndex, to: piece })
+        // If eating spot has enemy piece, eat it
+        if (this.state.board[eatFrom] === 20) {
+          this.eatPiece({ at: eatFrom, andGoTo: piece })
+        }
+      }
+      else {
+        this.addPiece(piece)        
+      }
     }
     // If clicking on existing own piece, select the piece
     if (this.state.board[piece] === this.state.me && !this.state.pieceSelected) {
@@ -84,6 +93,19 @@ export default class Game extends React.Component {
     }
   }
 
+  eatPiece(options) {
+    // Clear the spot where enemy piece was and move the piece that ate it over to it's destination
+    let nextBoard = [...this.state.board]
+    nextBoard[this.state.selectedIndex] = 0
+    nextBoard[options.at] = 0
+    nextBoard[options.andGoTo] = 10
+    this.setState({
+      pieceSelected: false, 
+      selectedIndex: null,
+      board: nextBoard
+    }, () => this.sendState())
+  }
+
   clearPiece(piece) {
     this.updatePiece(piece, 0)
   }
@@ -100,6 +122,9 @@ export default class Game extends React.Component {
   }
 
   highlightNeighbours(piece) {
+    // This is a map of neighbours for each piece.
+    // When player selects a piece we will add highlight class for the neighbours
+    // so that can be used to check for allowed moves
     const mapOfNeighbours = {
       0: [1,2,4],
       1: [0,4,7,3],
@@ -145,7 +170,61 @@ export default class Game extends React.Component {
     this.highlightHuntingZone(piece)
   }
 
+  getEdible(options) {
+    const eatingTable = [
+      [{d:3,e:1},{d:11,e:4},{d:5,e:2}],
+      [{d:6,e:3},{d:14,e:7},{d:8,e:4}],
+      [{d:7,e:4},{d:15,e:8},{d:9,e:5}],
+      [{d:17,e:10},{d:11,e:7},{d:0,e:1}],
+      [{d:10,e:7},{d:18,e:11},{d:12,e:8}],
+      [{d:0,e:2},{d:11,e:8},{d:19,e:12}],
+      [{d:20,e:13},{d:14,e:10},{d:1,e:3}],
+      [{d:13,e:10},{d:21,e:14},{d:15,e:11},{d:2,e:4}],
+      [{d:1,e:4},{d:14,e:11},{d:22,e:15},{d:16,e:12}],
+      [{d:2,e:5},{d:15,e:12},{d:23,e:16}],
+      [{d:24,e:17},{d:18,e:14},{d:4,e:7}],
+      [{d:0,e:4},{d:3,e:7},{d:17,e:14},{d:25,e:18},{d:19,e:15},{d:5,e:8}],
+      [{d:4,e:8},{d:18,e:15},{d:26,e:19}],
+      [{d:27,e:20},{d:21,e:17},{d:7,e:10}],
+      [{d:1,e:7},{d:6,e:10},{d:20,e:17},{d:28,e:21},{d:22,e:18},{d:8,e:11}],
+      [{d:2,e:8},{d:7,e:11},{d:21,e:18},{d:29,e:22},{d:9,e:12},{d:23,e:19}],
+      [{d:8,e:12},{d:22,e:19},{d:30,e:23}],
+      [{d:3,e:10},{d:31,e:24},{d:25,e:21},{d:11,e:14}],
+      [{d:4,e:11},{d:10,e:14},{d:24,e:21},{d:32,e:25},{d:26,e:22},{d:12,e:15}],
+      [{d:5,e:12},{d:11,e:15},{d:25,e:22},{d:33,e:26}],
+      [{d:6,e:13},{d:28,e:24},{d:14,e:17}],
+      [{d:7,e:14},{d:13,e:17},{d:27,e:24},{d:34,e:28},{d:29,e:25},{d:15,e:18}],
+      [{d:8,e:15},{d:14,e:18},{d:28,e:25},{d:35,e:29},{d:30,e:26},{d:16,e:19}],
+      [{d:9,e:16},{d:15,e:19},{d:29,e:26}],
+      [{d:10,e:17},{d:32,e:28},{d:18,e:21}],
+      [{d:11,e:18},{d:17,e:21},{d:31,e:28},{d:36,e:32},{d:33,e:29},{d:19,e:22}],
+      [{d:12,e:19},{d:18,e:22},{d:32,e:29}],
+      [{d:13,e:20},{d:34,e:31},{d:21,e:24}],
+      [{d:14,e:21},{d:20,e:24},{d:35,e:32},{d:22,e:25}],
+      [{d:15,e:22},{d:21,e:25},{d:34,e:32},{d:23,e:26}],
+      [{d:16,e:23},{d:22,e:26},{d:35,e:33}],
+      [{d:17,e:24},{d:36,e:34},{d:25,e:28}],
+      [{d:18,e:25},{d:24,e:28},{d:26,e:29}],
+      [{d:19,e:26},{d:25,e:29},{d:36,e:35}],
+      [{d:21,e:28},{d:27,e:31},{d:29,e:32}],
+      [{d:22,e:29},{d:28,e:32},{d:30,e:33}],
+      [{d:25,e:32},{d:31,e:34},{d:33,e:35}]
+    ]
+
+    let ediblePiece
+    // Let's cycle through that table and find out which piece can be eated, 
+    // based on from/to pieces received from handleClick()
+    eatingTable[options.from].forEach(function(zone) {
+      if (zone.d === options.to) {
+        ediblePiece = zone.e
+      }
+    })
+    return ediblePiece
+  }
+
   highlightHuntingZone(piece) {
+    // This marks jump spots and edible spots by adding CSS classes
+
     // index = starting point
     // d = destination for jump
     // e = spot to get eaten

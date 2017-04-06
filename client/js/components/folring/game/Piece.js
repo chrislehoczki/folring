@@ -36,7 +36,7 @@ export default class Piece extends React.Component {
 
     return (
 
-      <div id={idName} className={className} onClick={this.handleClick.bind(this)}>{this.props.index}</div>
+      <div id={idName} className={className} onClick={this.handleClick.bind(this)}></div>
     )
   }
 
