@@ -14,16 +14,16 @@ export default class Piece extends React.Component {
         className = "piece empty"
       break;
       case 10:
-        className = "piece white"
-      break;
-      case 11:
-        className = "piece white selected"
-      break;
-      case 20:
         className = "piece black"
       break;
-      case 21:
+      case 11:
         className = "piece black selected"
+      break;
+      case 20:
+        className = "piece white"
+      break;
+      case 21:
+        className = "piece white selected"
       break;
     }
 

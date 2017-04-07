@@ -69,7 +69,11 @@ input {
 	border-radius: 5px;
 }
 
-#users .user {
+#users .user.black {
+  color: black;
+}
+
+#users .user.white {
   color: white;
 }
 

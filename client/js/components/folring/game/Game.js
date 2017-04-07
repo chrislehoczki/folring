@@ -14,37 +14,65 @@ export default class Game extends React.Component {
       me: 10,
       meSelected: 11,
       piecesLeft: 18,
-      board: [0,0,0,20,0,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0]
+      turn: 0,
+      board: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
       // 0 - empty slot
-      // 10 - player 1 piece
+      // 10 - player 1 piece (black)
       // 11 - player 1 piece selected
-      // 20 - player 2 piece
+      // 20 - player 2 piece (white)
       // 21 - player 2 piece selected
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.room.game) {
+
+      // Determine which side the player is
+      if (nextProps.user != undefined) {
+        if ( nextProps.user.id === nextProps.room.players[0].id) {
+          this.playerSide = 0
+          console.log("I AM BLACK")
+        }
+        if ( nextProps.room.players.length > 1 ) {
+          if (nextProps.user.id === nextProps.room.players[1].id) {
+            this.playerSide = 1
+            console.log("I AM WHITE")
+          }
+        }
+      }
+      console.log("TURN: ", this.state.turn)
+
       const newState = {...nextProps.room.game};
       console.log('NEW GAME OBJECT', newState)
       this.setState({...newState}, () => {
         console.log("NEW STATE", this.state)
       });
+
+    this.checkTheGame()
     } 
   }
 
   sendState() {
+    // Send game state to server
     this.props.sendGame({game: this.state})
+    // Look for winning
     this.checkTheGame()
   }
 
   handleClick(piece) {
+    // If it's not my turn, don't even process
+    if (this.playerSide != this.state.turn) { return }
+
+    const myPiece = this.playerSide === 0 ? 10 : 20
+    const myPieceSelected = this.playerSide === 0 ? 11 : 21
+
     // If clicking on empty place, add new piece
     if (this.state.board[piece] === 0) {
       if (document.querySelector('#p'+piece).classList.contains("jumpTo")) {
         const eatFrom = this.getEdible({ from: this.state.selectedIndex, to: piece })
+        const opponentPiece = this.playerSide === 0 ? 20 : 10
         // If eating spot has enemy piece, eat it
-        if (this.state.board[eatFrom] === 20) {
+        if (this.state.board[eatFrom] === opponentPiece) {
           this.eatPiece({ at: eatFrom, andGoTo: piece })
         }
       }
@@ -53,11 +81,12 @@ export default class Game extends React.Component {
       }
     }
     // If clicking on existing own piece, select the piece
-    if (this.state.board[piece] === this.state.me && !this.state.pieceSelected) {
+    if (this.state.board[piece] === myPiece && !this.state.pieceSelected) {
+
       this.selectPiece(piece)
     }
     // If clicking on selected piece then unselect
-    if (this.state.board[piece] === this.state.meSelected && this.state.pieceSelected) {
+    if (this.state.board[piece] === myPieceSelected && this.state.pieceSelected) {
       this.unselectPiece(piece)
     }
     // If clicking on empty place and something was selected then move the piece
@@ -77,30 +106,39 @@ export default class Game extends React.Component {
   }
 
   selectPiece(piece) {
+    const myPieceSelected = this.playerSide === 0 ? 11 : 21
     this.setState({...this.state, pieceSelected: true, selectedIndex: piece }, () => this.sendState())
-    this.updatePiece(piece, this.state.meSelected)
+    this.updatePiece(piece, myPieceSelected)
   }
 
   unselectPiece(piece) {
+    const myPiece = this.playerSide === 0 ? 10 : 20
     this.setState({...this.state, pieceSelected: false, selectedIndex: null }, () => this.sendState())
-    this.updatePiece(piece, this.state.me)
+    this.updatePiece(piece, myPiece)
   }
 
   addPiece(piece) {
+    // If I am player number 0 add black piece (10) otherwise add white (20)
+    const myPiece = this.playerSide === 0 ? 10 : 20
     if (this.state.piecesLeft > 0 && !this.state.pieceSelected) {
       let nextBoard = [...this.state.board]
-      nextBoard[piece] = this.state.me
-      this.setState({...this.state, piecesLeft: (this.state.piecesLeft - 1), board: nextBoard }, () => this.sendState())     
+      nextBoard[piece] = myPiece
+      // Change turns
+      const nextTurn = this.state.turn === 0 ? 1 : 0
+      this.setState({...this.state, turn: nextTurn, piecesLeft: (this.state.piecesLeft - 1), board: nextBoard }, () => this.sendState())
     }
   }
 
   eatPiece(options) {
+    const myPiece = this.playerSide === 0 ? 10 : 20
     // Clear the spot where enemy piece was and move the piece that ate it over to it's destination
     let nextBoard = [...this.state.board]
     nextBoard[this.state.selectedIndex] = 0
     nextBoard[options.at] = 0
-    nextBoard[options.andGoTo] = 10
+    nextBoard[options.andGoTo] = myPiece
+    const nextTurn = this.state.turn === 0 ? 1 : 0
     this.setState({
+      turn: nextTurn, 
       pieceSelected: false, 
       selectedIndex: null,
       board: nextBoard
@@ -112,10 +150,13 @@ export default class Game extends React.Component {
   }
 
   moveSelectedPieceTo(piece) {
+    const myPiece = this.playerSide === 0 ? 10 : 20
     let nextBoard = [...this.state.board]
-    nextBoard[piece] = this.state.me
+    nextBoard[piece] = myPiece
     nextBoard[this.state.selectedIndex] = 0
+    const nextTurn = this.state.turn === 0 ? 1 : 0
     this.setState({...this.state, 
+      turn: nextTurn, 
       pieceSelected: false, 
       selectedIndex: null,
       board: nextBoard
@@ -312,7 +353,6 @@ export default class Game extends React.Component {
       let count = 0
       circle.map((piece) => {
         if (this.state.board[piece] === 10) { 
-          console.log(piece, this.state.board[piece])
           count++ 
           if (count === 6) {
             alert("WIN")
@@ -325,12 +365,17 @@ export default class Game extends React.Component {
   }
 
   render() {
+    console.log(this.props.user)
+
     const pieces = this.state.board.map((status, index) => {
       return <Piece key={index} index={index} status={status} handleClick={this.handleClick.bind(this)} />
     })
     const neighbors = this.state.pieceSelected ? this.highlightNeighbours(this.state.selectedIndex) : this.clearHghlights()
+    
+    const boardClass = this.state.turn === 0 ? "board turnBlack" : "board turnWhite"
+
     return (
-      <div className="board">
+      <div className={boardClass}>
         <div className="background"></div>
         {pieces}
       </div>

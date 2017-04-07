@@ -12,8 +12,20 @@ export default class User extends Component {
 		} else {
 			content = `Spectator ${this.props.number}: ${this.props.user}`
 		}
+
+		let userClass
+		if (this.props.number === 0) {
+			userClass = "user black"
+		}
+		else if (this.props.number === 1) {
+			userClass = "user white"
+		}
+		else {
+			userClass = "user"
+		}
+		
 		return (
-			<div className='user'>{content}</div>
+			<div className={userClass}>{content}</div>
 		);
 	}
 }
