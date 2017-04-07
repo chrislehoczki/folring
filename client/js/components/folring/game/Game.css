@@ -9,6 +9,8 @@ html {
 
 body {
   background: #957e53;
+  padding: 0;
+  margin: 0;
 }
 
 a {
@@ -26,10 +28,10 @@ li {
 .folring-holder {
   position: relative;
   text-align: center;
-  padding: 60px;
-  width: 640px;
-  height: 640px;
-  margin: auto;
+  padding: 0px;
+  width: 100%;
+  max-width: 640px;
+  margin: 40px auto;
 }
 
 .mini-folring-holder {
@@ -76,10 +78,11 @@ li {
 
 .pieceCount {
   color: black;
-  font-size: 18px;
+  font-size: 13px;
   position: absolute;
-  bottom: -30px;
-  left: 164px;
+  top: 6px;
+  left: 5px;
+  width: 100%;
 }
 
 .piece {

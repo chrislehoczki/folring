@@ -24,6 +24,15 @@ export default class Game extends React.Component {
     }
   }
 
+  componentDidMount() {
+    // Set correct height and vertical position for the game board
+    const board = document.querySelector('.folring-holder')
+    board.style.height = board.offsetWidth+"px"
+
+    const messaging = document.querySelector('#messaging')
+    messaging.style.height = "calc(100% - "+parseInt(board.offsetWidth+54)+"px)"
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.room.game) {
       // Determine which side the player is

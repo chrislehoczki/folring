@@ -51,14 +51,15 @@ button.profile {
 }
 
 #messaging {
-	position: absolute;
+  position: absolute;
   bottom: 0px;
-  right: 0;
-  width: 280px;
-  height: 280px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 374px);
   color: white;
-  background: #333; 
-  border-top-left-radius: 9px;
+  background: #333;
+  padding-top: 8px;
+  overflow: scroll;
 }
 
 #messaging.black {
@@ -70,10 +71,11 @@ button.profile {
 }
 
 #message-input {
-  position: absolute;
-  bottom: 0;
-  width: 280px;
-  border-top: 1px dotted white;
+  position: fixed;
+  width: 100%;
+  margin-top: -8px;
+  margin-bottom: 8px;
+  border-bottom: 1px dotted white;
 }
 
 h2 {
@@ -87,7 +89,7 @@ input {
   color: white;
   display: block;
   font-size: 20px;
-  width: 238px;
+  width: calc(100% - 40px);
   border: none;
 }
 
@@ -97,8 +99,8 @@ input:focus {
  
 #message-input button {
 	position: absolute;
-  bottom: 5px;
-  right: 5px;
+  top: 3px;
+  right: 7px;
   width: 32px;
   height: 32px;
   background: none;
@@ -117,48 +119,51 @@ input:focus {
 
 #messaging p {
   padding: 5px 15px;
-  font-size: 18px;
+  margin: 0;
+  font-size: 14px;
   font-style: italic;
 }
 
 #users {
-	position: fixed;
-	top: 50px;
-	right: 50px;
-	text-align: center;
-	border: 1px solid black;
-	padding: 5px;
-	border-radius: 5px;
+	position: absolute;
+  top: 0px;
+  left: 133px;
+  width: calc(100% - 133px);
+  text-align: center;
+  padding: 7px 0;
 }
 
 #users .user {
-  font-size: 28px;
+  font-size: 15px;
   font-weight: bold;
   display: block;
-  width: 150px;
+  width: calc(100% - 8px);
+  height: 19px;
   text-align: left;
   padding-left: 5px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 #users .user.black:before {
   content: " ";
   background: black;
-  width: 25px;
-  height: 24px;
+  width: 14px;
+  height: 14px;
   float: left;
   font-size: 0px;
-  margin: 4px 6px 0px 0px;
+  margin: 2px 6px 0px 0px;
   border-radius: 50%;
 }
 
 #users .user.white:before {
   content: " ";
   background: white;
-  width: 25px;
-  height: 24px;
+  width: 14px;
+  height: 14px;
   float: left;
   font-size: 0px;
-  margin: 4px 6px 0px 0px;
+  margin: 2px 6px 0px 0px;
   border-radius: 50%;
 }
 
