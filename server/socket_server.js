@@ -213,7 +213,11 @@ class Folring {
     addPlayerToRoom(roomId, userId) {
     	const index = this.rooms[roomId].players.findIndex((user) => user.id === userId);
     	const user = this.getUser(userId);
-    	const newPlayers = [...this.rooms[roomId].players.slice(0, index), user, ...this.rooms[roomId].players.slice(index + 1)];
+
+        const newPlayers = [ ...this.rooms[roomId].players ];
+        newPlayers.push(user);
+
+    	// const newPlayers = [...this.rooms[roomId].players.slice(0, index), user, ...this.rooms[roomId].players.slice(index + 1)];
     	this.updateRoom(roomId, {players: newPlayers})
     	this.updateUser(userId, {currentRoom: roomId})
     }

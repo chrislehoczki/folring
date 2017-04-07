@@ -52,6 +52,7 @@ export default class Folring extends Component {
 
 
 	updateRoom(room) {
+		console.log(room)
 		if (room.id === this.state.room.id) {
 			const newRoom = {...this.state.room, ...room};
 			this.setState({room: newRoom});

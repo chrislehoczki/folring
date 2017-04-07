@@ -23,8 +23,8 @@ export default class Room extends Component {
 			<div className="room">
 				<MiniFolring room={room}/>
 				<p>{room.id}</p>
-				<p>Player 1: {room.players[0] ? room.players[0].username : <button onClick={this.joinRoom.bind(this, 0)}>Join</button>}</p>
-				<p>Player 2: {room.players[1] ? room.players[1].username : <button onClick={this.joinRoom.bind(this, 1)}>Join</button>}</p>
+				<p>Black: {room.players[0] ? room.players[0].username : <button onClick={this.joinRoom.bind(this, 0)}>Join</button>}</p>
+				<p>White: {room.players[1] ? room.players[1].username : <button onClick={this.joinRoom.bind(this, 1)}>Join</button>}</p>
 				<p>Spectators: {this.props.room.spectators.length} <button onClick={this.spectateRoom.bind(this)}>Spectate</button></p>
 			</div>
 		);
