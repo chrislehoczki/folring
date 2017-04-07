@@ -70,6 +70,15 @@ li {
   opacity: 0.28;
 }
 
+.pieceCount {
+  color: black;
+  opacity: 0.28;
+  font-size: 18px;
+  position: absolute;
+  bottom: -30px;
+  left: 164px;
+}
+
 .piece {
   position: absolute;
   width: 10%;

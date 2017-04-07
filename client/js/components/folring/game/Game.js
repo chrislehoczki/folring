@@ -373,6 +373,7 @@ export default class Game extends React.Component {
 
     return (
       <div className={boardClass}>
+        <div className="pieceCount">You have {this.state.piecesLeft} pieces left</div>
         <div className="background"></div>
         {pieces}
       </div>
