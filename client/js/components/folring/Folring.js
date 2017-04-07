@@ -12,7 +12,6 @@ export default class Folring extends Component {
 	constructor(props) {
 		super(props);
 		this.query = queryString.parse(this.props.location.search);
-
 		this.state = {
 			room: {
 				players: [],
@@ -31,10 +30,8 @@ export default class Folring extends Component {
 		const user = this.props.user;
 		
 		if (this.query.userType === 'player') {
-			console.log("LEAVING PLAYER")
 			window.socket.emit('leave_room', { user });
 		} else {
-			console.log("LEAVING SPECTATOR")
 			window.socket.emit('unspectate_room', { user, roomId: this.state.room.id });
 		}
 		
@@ -42,7 +39,6 @@ export default class Folring extends Component {
 	}
 
 	componentDidMount() {
-		console.log('MOUNTED TOLRING')
 		window.socket.on('update_room', this.updateRoom);
 
 
@@ -56,19 +52,13 @@ export default class Folring extends Component {
 
 
 	updateRoom(room) {
-		console.log(room.id);
-		console.log(this.state.room)
 		if (room.id === this.state.room.id) {
-
 			const newRoom = {...this.state.room, ...room};
 			this.setState({room: newRoom});
-		}
-		
-			
+		}		
 	}
 
 	componentWillUnmount() {
-		console.log('UNMOUNTING TOLRING')
 		this.mounted = false;
 		window.socket.removeListener('update_room', this.updateRoom)
 	}
@@ -83,9 +73,8 @@ export default class Folring extends Component {
 				<button onClick={this.leaveGame.bind(this)}>Leave Game</button>
 				<Users players={this.state.room.players} spectators={this.state.room.spectators}/>
 				<div className="folring-holder">
-					<Game sendGame={this.sendGame} room={this.state.room}/>
-				</div>
-				
+					<Game sendGame={this.sendGame} room={this.state.room} user={this.props.user}/>
+				</div>	
 				<Messaging user={this.props.user} />
 			</div>
 		);
