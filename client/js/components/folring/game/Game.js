@@ -325,6 +325,8 @@ export default class Game extends React.Component {
   }
 
   render() {
+    console.log(this.props.user);
+    console.log(this.props.room.players);
     const pieces = this.state.board.map((status, index) => {
       return <Piece key={index} index={index} status={status} handleClick={this.handleClick.bind(this)} />
     })
