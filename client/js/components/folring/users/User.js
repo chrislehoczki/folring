@@ -25,7 +25,7 @@ export default class User extends Component {
 		}
 		
 		return (
-			<div className={userClass}>{content}</div>
+			<div className={userClass}>{this.props.user}</div>
 		);
 	}
 }

@@ -7,11 +7,14 @@ import React, { Component } from 'react';
 export default class Nav extends Component {
 	render() {
 		return (
-			<ul>
-		    	<li><Link to="/">Home</Link></li>
-		       	{this.props.user ? <li><Link to="/profile">Profile</Link></li> : null}
-		       	{/*<li><Link to="/Folring">Folring</Link></li>*/}
-    		</ul>
+			<div>
+	     	{ this.props.user ? 
+	      	<div className="nav">
+	       		<Link to="/"><button className="home" title="home"></button></Link>
+	       		<Link to="/profile"><button className="profile" title="profile"></button></Link>
+			  	</div>
+	  		: null }
+  		</div>
 		);
 	}
 }

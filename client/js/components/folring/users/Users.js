@@ -16,10 +16,8 @@ export default class Users extends Component {
 		
 		return (
 			<div id="users">
-			<h2> Players </h2>
 				{players}
-			<h2> Spectators </h2>
-				{spectators}
+				<span>and {this.props.spectators.length} spectators</span>
 			</div>
 		);
 	}

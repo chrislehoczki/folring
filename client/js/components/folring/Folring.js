@@ -71,7 +71,7 @@ export default class Folring extends Component {
 	render() {
 		return (
 			<div className="game-holder">
-				<button onClick={this.leaveGame.bind(this)}>Leave Game</button>
+				<button className="leaveGame" onClick={this.leaveGame.bind(this)}></button>
 				<Users players={this.state.room.players} spectators={this.state.room.spectators}/>
 				<div className="folring-holder">
 					<Game sendGame={this.sendGame} room={this.state.room} user={this.props.user}/>

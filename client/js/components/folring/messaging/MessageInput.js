@@ -13,7 +13,7 @@ export default class MessageInput extends Component {
 	render() {
 		return (
 			<div id="message-input">
-				<input ref="input" />
+				<input ref="input" placeholder="message" />
 				<button onClick={this.sendMessage.bind(this)} />
 			</div>
 		);

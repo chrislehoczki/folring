@@ -30,7 +30,7 @@ export default class Homepage extends Component {
 		} 
 
 		return (
-			<div>
+			<div className="homepage">
 				{this.state.showNameChecker ? <NameChecker goToRooms={this.goToRooms} /> : null }
 				{roomComponents}
 			</div>

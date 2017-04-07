@@ -22,10 +22,12 @@ export default class Room extends Component {
 		return (
 			<div className="room">
 				<MiniFolring room={room}/>
-				<p>{room.id}</p>
-				<p>Black: {room.players[0] ? room.players[0].username : <button onClick={this.joinRoom.bind(this, 0)}>Join</button>}</p>
-				<p>White: {room.players[1] ? room.players[1].username : <button onClick={this.joinRoom.bind(this, 1)}>Join</button>}</p>
-				<p>Spectators: {this.props.room.spectators.length} <button onClick={this.spectateRoom.bind(this)}>Spectate</button></p>
+				<div className="roomInfo">
+					<div className="roomID" style={{ display: 'none' }}>{room.id}</div>
+					{room.players[0] ? <div className="avatar black" title={room.players[0].username}></div> : <button className="play black" title="Play as black" onClick={this.joinRoom.bind(this, 0)}></button>}
+					{room.players[1] ? <div className="avatar white" title={room.players[1].username}></div> : <button className="play white" title="Play as white" onClick={this.joinRoom.bind(this, 1)}></button>}
+					<button className="spectate" title={`${this.props.room.spectators.length} spectators`} onClick={this.spectateRoom.bind(this)}><span>{this.props.room.spectators.length}</span></button>
+				</div>
 			</div>
 		);
 	}

@@ -356,7 +356,6 @@ export default class Game extends React.Component {
           count++ 
           if (count === 6) {
             alert("WIN")
-            return
           }
         }
       })

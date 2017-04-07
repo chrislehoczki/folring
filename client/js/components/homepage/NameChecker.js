@@ -24,7 +24,7 @@ export default class NameChecker extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="nameChecker">
 				<h2> What is your name? </h2>
 				<input value={this.state.user} onChange={this.addUser}></input>
 				<button className="join" onClick={this.updateUserName.bind(this)}>Select Game Room</button>
