@@ -7,12 +7,16 @@ const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
 
 import { tokenForUser } from '../controllers/authentication';
+import { getUser } from '../controllers/user';
 
 // react
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import { StaticRouter } from 'react-router'
 import ReactApp from '../../client/js/components/App';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import rootReducer from '../../client/js/reducers/index';
 
 module.exports = (app) => {
 
@@ -22,6 +26,7 @@ module.exports = (app) => {
   	// app.post('/login/facebook', Authentication.signinFunUser);
 
   	app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+
 
     // handle the callback after facebook has authenticated the user
     app.get('/auth/facebook/callback',
@@ -34,11 +39,6 @@ module.exports = (app) => {
         res.redirect("/?apitoken=" + apitoken);
       });
 
- //   	app.get('/auth/facebook/callback',
-	// 	  passport.authenticate('facebook', { session: false, failureRedirect: "/" }),
-		  
-	// );
-
     app.get('/successMessage', (req, res) => {
     	res.send({success: true})
     })
@@ -47,29 +47,25 @@ module.exports = (app) => {
     	res.send({success: false})
     })
 
+    // api
+    app.route('/api/user')
+     .get(requireAuth, getUser);
 
 
     app.get('*', (req, res) => {
-    // const match = routes.reduce((acc, route) => matchPath(req.url, route, { exact: true }) || acc, null);
-    // if (!match) {
-    //     res.status(404).send(render(<h1>No Match</h1>));
-    //     return;
-    // }
-    console.log('APP', app)
-    const html = ReactDOMServer.renderToString(<StaticRouter context={{}} location={req.url}>
-                                  <ReactApp />
-                                </StaticRouter>);
+      const store = createStore(rootReducer);
+      let preloadedState = store.getState();
+      const html = ReactDOMServer.renderToString(
+        <Provider store={store}>
+          <StaticRouter context={{}} location={req.url}>
+            <ReactApp />
+          </StaticRouter>
+        </Provider>);
+        res.send(createPage(html));
+      });
 
-    res.send(createPage(html));
-    
-    });
+  	
 
-  	// api
-  	// app.route('/api/user')
-  	// 	.get(requireAuth, DAO.getUser);
-
-  	// all other renders
-    // app.get('/*', handleRender);
 
 };
 

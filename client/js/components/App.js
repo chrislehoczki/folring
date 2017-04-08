@@ -31,6 +31,10 @@ class App extends Component {
     this.FolringWrapper = (props) => {
       return <Folring {...props} user={this.state.user} />
    }
+
+   this.LoginWrapper = (props) => {
+      return <Login {...props} />
+   }
   }
 
   componentDidMount() {
@@ -53,7 +57,7 @@ class App extends Component {
     return (
           <div>
             <Nav user={this.state.user}/>
-            <Route exact path="/" component={Login}/>
+            <Route exact path="/" component={this.LoginWrapper}/>
             <Route path="/rooms" component={this.HomepageWrapper} />
             <Route path="/profile" component={this.ProfileWrapper}/>
             <Route path="/folring" component={this.FolringWrapper} />
