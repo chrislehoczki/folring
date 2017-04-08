@@ -1,13 +1,18 @@
-
+console.log('RUNNING INDEX.JS')
 require.extensions['.css'] = () => {
   return;
 };
+
+// import dotenv from 'dotenv';
+require('dotenv').config()
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 
 var express = require('express')
 var app = express();
 var server = require('http').createServer(app);
 
-console.log('HMMM')
+import routes from './routes/index'
 // const React = require('react');
 // const ReactDOMServer = require('react-dom/server');
 // const StaticRouter = require('react-router').StaticRouter;
@@ -18,10 +23,21 @@ console.log('HMMM')
 
 // const socket = require('./socket_server');
 
+mongoose.Promise = global.Promise;
+const mongooseURI = 'mongodb://root:abc123@localhost:3000/folring';
+mongoose.connect(mongooseURI);
+
 const Folring = require('./socket_server');
 
+app.use(bodyParser.json({limit: '5mb'}));
+app.use(bodyParser.urlencoded({
+  extended: true,
+  limit: '5mb'
+}));
 app.use('/client', express.static(process.cwd() + '/client'));
 app.use('/dist', express.static(process.cwd() + '/dist'));
+
+routes(app);
 
 app.get('/', function(req, res) {
 	res.send(createPage());
@@ -50,30 +66,30 @@ app.get('/', function(req, res) {
 // });
 
 
-new Folring(server);
-// socket(server);
+// new Folring(server);
+// // socket(server);
 
 
-if (process.env.NODE_ENV === 'development') {
-    var webpackDevMiddleware = require('webpack-dev-middleware');
-    var webpackHotMiddleware = require('webpack-hot-middleware');
-    var webpack = require('webpack');
-    var config = require('../webpack.config.dev.js');
+// if (process.env.NODE_ENV === 'development') {
+//     var webpackDevMiddleware = require('webpack-dev-middleware');
+//     var webpackHotMiddleware = require('webpack-hot-middleware');
+//     var webpack = require('webpack');
+//     var config = require('../webpack.config.dev.js');
 
-    var compiler = webpack(config);
-    app.use(webpackDevMiddleware(compiler, {
-      hot: true,
-      publicPath: config.output.publicPath,
-      quiet: false,
-      stats: {
-        colors: true
-      },
-      serverSideRender: true
-    }));
-    app.use(webpackHotMiddleware(compiler));
+//     var compiler = webpack(config);
+//     app.use(webpackDevMiddleware(compiler, {
+//       hot: true,
+//       publicPath: config.output.publicPath,
+//       quiet: false,
+//       stats: {
+//         colors: true
+//       },
+//       serverSideRender: true
+//     }));
+//     app.use(webpackHotMiddleware(compiler));
     
-    // reload(server, app);
-  }
+//     // reload(server, app);
+//   }
 
 var PORT = process.env.PORT || 5000;
 server.listen(PORT, (error) => {
