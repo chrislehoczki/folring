@@ -4,7 +4,7 @@ const jwt = require('jwt-simple');
 const passport = require('passport');
 
 // creates a token for user
-function tokenForUser(user) {
+export function tokenForUser(user) {
   const timestamp = new Date().getTime();
   const id = user._id;
   return jwt.encode({ sub: id, iat: timestamp }, process.env.SECRET);
@@ -12,8 +12,6 @@ function tokenForUser(user) {
 
 // signs in a local user
 exports.signin = function(req, res, next) {
-
-
 
     passport.authenticate('local', {session: false}, function(err, user, loginError) {
       if (err) {
@@ -78,10 +76,22 @@ exports.signup = function(req, res, next) {
         apitoken: apitoken,
         spectatingRooms: doc.spectatingRooms,
         playingRooms: doc.playingRooms
-      }
+      };
       
       // Repond to request indicating the user was created
       res.json(user);
     });
   });
 };
+
+exports.facebookLogin = function(req, res) {
+  console.log('GETTING HERE', req)
+  passport.authenticate('facebook', {
+    session: false
+    }), function(req, res) {
+        const user = req.user;
+        console.log('USER',)
+        res.send(user);
+        // res.redirect("/profile?access_token=" + req.user.access_token);
+      }
+}

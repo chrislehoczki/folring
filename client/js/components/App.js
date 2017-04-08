@@ -8,7 +8,8 @@ import {
 import Homepage from './homepage/Homepage';
 import Profile from './profile/Profile';
 import Folring from './folring/Folring';
-import Nav from './nav/Nav.js';
+import Nav from './nav/Nav';
+import Login from './Login/login';
 
 
 
@@ -35,19 +36,19 @@ class RouteConfigExample extends Component {
   }
 
   componentDidMount() {
-    window.socket.on('update_room', (room) => {
-      const newRooms = { ...this.state.rooms };
-      newRooms[room.id] = room;
-      this.setState({rooms: newRooms});
-    });
+    // window.socket.on('update_room', (room) => {
+    //   const newRooms = { ...this.state.rooms };
+    //   newRooms[room.id] = room;
+    //   this.setState({rooms: newRooms});
+    // });
 
-    window.socket.on('send_all_rooms', (rooms) => {
-      this.setState({rooms: rooms})
-    });
+    // window.socket.on('send_all_rooms', (rooms) => {
+    //   this.setState({rooms: rooms})
+    // });
 
-    window.socket.on('user', (user) => {
-      this.setState({user: user});
-    });
+    // window.socket.on('user', (user) => {
+    //   this.setState({user: user});
+    // });
   }
 
   render() {
@@ -55,7 +56,8 @@ class RouteConfigExample extends Component {
         <Router>
           <div>
             <Nav user={this.state.user}/>
-            <Route exact path="/" component={this.HomepageWrapper}/>
+            <Route exact path="/" component={Login}/>
+            <Route path="/rooms" component={this.HomepageWrapper} />
             <Route path="/profile" component={this.ProfileWrapper}/>
             <Route path="/folring" component={this.FolringWrapper} />
           </div>
