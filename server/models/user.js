@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt-nodejs');
 const userSchema = new Schema({
   email: { type: String, sparse: true, unique: true, lowercase: true },
   password: String,
+  ownedRooms: [{ type: Schema.Types.ObjectId, ref: 'room' }],
   playingRooms: [{ type: Schema.Types.ObjectId, ref: 'room' }],
   spectatingRooms: [{ type: Schema.Types.ObjectId, ref: 'room' }],
   facebook: Object
