@@ -7,14 +7,21 @@ import ReactDOM from 'react-dom';
 import App from './components/App.js';
 import { socket } from './socket/socket_client';
 
+import {
+  BrowserRouter as Router
+} from 'react-router-dom'
 
-// socket().then(() => {
+// redux store
+import store, { history } from './store';
+
+import { Provider } from 'react-redux';
+
 	ReactDOM.render(
-  	<App />
+		<Provider store={ store }>
+			<Router>
+	  			<App />
+	  		</Router>
+  		</Provider>
   , document.querySelector('#root'));
 
-// }).catch((err) => {
-// 	console.log(err);
-// 	console.log('couldnt access socket or render react')
-// });
 

@@ -8,6 +8,12 @@ const requireSignin = passport.authenticate('local', { session: false });
 
 import { tokenForUser } from '../controllers/authentication';
 
+// react
+import React from 'react'
+import ReactDOMServer from 'react-dom/server'
+import { StaticRouter } from 'react-router'
+import ReactApp from '../../client/js/components/App';
+
 module.exports = (app) => {
 
 	// login / signup
@@ -23,9 +29,9 @@ module.exports = (app) => {
    			 session: false
     	}), function(req, res) {
         const user = req.user;
-        user.apitoke = tokenForUser(user);
-        res.send(user);
-        // res.redirect("/profile?access_token=" + req.user.access_token);
+        const apitoken = tokenForUser(user);
+        // res.send(user);
+        res.redirect("/?apitoken=" + apitoken);
       });
 
  //   	app.get('/auth/facebook/callback',
@@ -41,6 +47,23 @@ module.exports = (app) => {
     	res.send({success: false})
     })
 
+
+
+    app.get('*', (req, res) => {
+    // const match = routes.reduce((acc, route) => matchPath(req.url, route, { exact: true }) || acc, null);
+    // if (!match) {
+    //     res.status(404).send(render(<h1>No Match</h1>));
+    //     return;
+    // }
+    console.log('APP', app)
+    const html = ReactDOMServer.renderToString(<StaticRouter context={{}} location={req.url}>
+                                  <ReactApp />
+                                </StaticRouter>);
+
+    res.send(createPage(html));
+    
+    });
+
   	// api
   	// app.route('/api/user')
   	// 	.get(requireAuth, DAO.getUser);
@@ -49,4 +72,36 @@ module.exports = (app) => {
     // app.get('/*', handleRender);
 
 };
+
+
+
+function createPage(html) {
+  let scripts, staticCss;
+
+  if (process.env.NODE_ENV === 'development') { 
+    scripts = `<script type="text/javascript" src="/bundle.js"></script>`;
+    staticCss = '';
+  } else {
+    scripts = `<script type="text/javascript" src="/dist/vendor.bundle.js"></script><script type="text/javascript" src="/dist/bundle.js"></script>`;
+    staticCss = '<link rel="stylesheet" type="text/css" href="/dist/styles.css">';
+  }
+
+  const page = 
+    `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Folring</title>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        ${staticCss}
+    </head>
+    <body>
+      <div id="root">${html}</div>
+      ${scripts}
+    </body>
+    </html>`;
+
+  return page;
+}
 

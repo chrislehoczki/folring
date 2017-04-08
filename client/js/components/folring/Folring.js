@@ -5,7 +5,10 @@ import Game from './game/Game.js';
 import Users from './users/Users.js';
 
 import queryString from 'query-string';
-require('./Folring.css');
+
+if (process.env.BROWSER) {
+  require('./Folring.css');
+}
 
 export default class Folring extends Component {
 

@@ -3,7 +3,12 @@ import React, { Component } from 'react';
 import Room from './Room';
 import NameChecker from './NameChecker.js';
 
-require('./Homepage.css');
+
+if (process.env.BROWSER) {
+	require('./Homepage.css');
+}
+
+
 
 export default class Homepage extends Component {
 

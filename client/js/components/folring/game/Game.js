@@ -2,7 +2,9 @@ import React from "react";
 
 import Piece from "./Piece";
 
-require('./Game.css');
+if (process.env.BROWSER) {
+  require('./Game.css');
+}
 
 export default class Game extends React.Component {
 

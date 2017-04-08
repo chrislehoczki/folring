@@ -11,9 +11,7 @@ import Folring from './folring/Folring';
 import Nav from './nav/Nav';
 import Login from './Login/login';
 
-
-
-class RouteConfigExample extends Component {
+class App extends Component {
 
  constructor(props) {
     super(props);
@@ -53,7 +51,6 @@ class RouteConfigExample extends Component {
 
   render() {
     return (
-        <Router>
           <div>
             <Nav user={this.state.user}/>
             <Route exact path="/" component={Login}/>
@@ -61,7 +58,6 @@ class RouteConfigExample extends Component {
             <Route path="/profile" component={this.ProfileWrapper}/>
             <Route path="/folring" component={this.FolringWrapper} />
           </div>
-        </Router>
       )
   }
  
@@ -71,4 +67,4 @@ class RouteConfigExample extends Component {
 
 
 
-export default RouteConfigExample
+export default App;
