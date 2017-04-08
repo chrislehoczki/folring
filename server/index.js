@@ -9,6 +9,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import passport from 'passport';
 
+
 var express = require('express')
 var app = express();
 var server = require('http').createServer(app);
@@ -16,6 +17,7 @@ var server = require('http').createServer(app);
 import routes from './routes/index'
 import cors from 'cors';
 
+const setupSocket = require('./socket/socket_server');
 
 // const socket = require('./socket_server');
 
@@ -68,13 +70,16 @@ if (process.env.NODE_ENV === 'development') {
       stats: {
         colors: true
       },
-      serverSideRender: true
+      serverSideRender: true,
+      historyApiFallback: true
     }));
     app.use(webpackHotMiddleware(compiler));
   }
 
 
 routes(app);
+
+setupSocket(server);
 
 var PORT = process.env.PORT || 5000;
 server.listen(PORT, (error) => {

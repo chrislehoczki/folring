@@ -9,6 +9,9 @@ const userSchema = new Schema({
   playingRooms: [{ type: Schema.Types.ObjectId, ref: 'room' }],
   spectatingRooms: [{ type: Schema.Types.ObjectId, ref: 'room' }],
   facebook: Object
+},
+{
+  timestamps: true
 });
 
 

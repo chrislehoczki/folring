@@ -1,0 +1,34 @@
+
+.login {
+	position: absolute;
+	left: calc((100% / 2) - 180px);
+	top: calc((100% / 2) - 30px);
+}
+
+.fbook-login {
+	background: #3B5998;
+	width: 320px;
+	height: 60px;
+	border-radius: 5px;	
+	position: relative;
+	margin: 0;
+}
+
+.fbook-login img {
+	width: 50px;
+    height: 50px;
+    margin-top: 0;
+    left: 0px;
+    position: absolute;
+}
+
+.fbook-login p {
+	position: absolute;
+    line-height: 60px;
+    vertical-align: top;
+    margin: 0;
+    color: white;
+    width: 75%;
+    right: 10px;
+    font-size: 20px;
+}

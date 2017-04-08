@@ -47,7 +47,7 @@ exports.signin = function(req, res, next) {
 
 // signs up a local user
 exports.signup = function(req, res, next) {
-  console.log('REQ BODY', req.body)
+
   const email = req.body.email;
   const password = req.body.password;
 

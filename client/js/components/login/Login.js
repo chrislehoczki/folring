@@ -8,9 +8,15 @@ import queryString from 'query-string';
 
 import {
   Redirect
-} from 'react-router-dom'
+} from 'react-router-dom';
 
 import { authenticateToken } from '../../actions/auth';
+
+if (process.env.BROWSER) {
+	require('./Login.css');
+}
+
+const io = require('socket.io-client')
 
 class Login extends Component {
 
@@ -31,9 +37,12 @@ class Login extends Component {
 	render() {
 		console.log('USER PROPS', this.props.user)
 		return (
-			<div>
-				<a href="/auth/facebook">Login with Facebook</a>
-				{this.props.user._id ?
+			<div className="login">
+				<a className="fbook-login" href="/auth/facebook">
+					<img src="/client/images/fb.png"/>
+					<p>Login With Facebook</p>
+				</a>
+				{this.props.user ?
 				<Redirect to={{
 			        pathname: '/rooms',
 			        state: { from: this.props.location }

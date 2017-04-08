@@ -34,7 +34,9 @@ module.exports = (app) => {
    			 session: false
     	}), function(req, res) {
         const user = req.user;
+
         const apitoken = tokenForUser(user);
+        
         // res.send(user);
         res.redirect("/?apitoken=" + apitoken);
       });

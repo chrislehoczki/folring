@@ -1,8 +1,10 @@
 
 import axios from 'axios';
+const io = require('socket.io-client')
+
 import { LOAD_USER } from './types';
 
-import { browserHistory } from 'react-router';
+
 
 export function authenticateToken(token) {
 
@@ -22,7 +24,7 @@ export function authenticateToken(token) {
             payload: response.data
           });
 
-          window.tempHistory.push('/rooms');
+          connect_socket(window.localStorage.apitoken);
 
         }
    
@@ -32,4 +34,20 @@ export function authenticateToken(token) {
       });
     }
 
+}
+
+export function connect_socket (token) {
+  var socket = io.connect('http://localhost:5000');
+  socket.on('connect', function () {
+    socket
+      .emit('authenticate', {token: window.localStorage.apitoken }) //send the jwt
+      .on('authenticated', function (msg) {
+        //do other things
+        console.log('authenticated', msg)
+      })
+      .on('unauthorized', function(msg) {
+        console.log("unauthorized: " + JSON.stringify(msg.data));
+        throw new Error(msg.data.type);
+      })
+});
 }
