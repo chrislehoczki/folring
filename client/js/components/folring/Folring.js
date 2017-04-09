@@ -1,49 +1,44 @@
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { emit } from '../../actions/socket';
+
 import Messaging from './messaging/Messaging';
 import Game from './game/Game.js';
 import Users from './users/Users.js';
 
 import queryString from 'query-string';
 
+import { getCurrentRoom } from '../../actions/rooms';
+
 if (process.env.BROWSER) {
   require('./Folring.css');
 }
 
-export default class Folring extends Component {
+class Folring extends Component {
 
 	constructor(props) {
 		super(props);
 		this.query = queryString.parse(this.props.location.search);
-		this.state = {
-			room: {
-				players: [],
-				spectators: [],
-				game: null,
-				id: this.query.roomId
-			}
-		};
 		this.sendGame = this.sendGame.bind(this);
-		this.updateRoom = this.updateRoom.bind(this);
 	}
 
 	
 	leaveGame() {
-		// const user = window.localStorage.user;
-		const user = this.props.user;
-		
-		if (this.query.userType === 'player') {
-			window.socket.emit('leave_room', { user });
-		} else {
-			window.socket.emit('unspectate_room', { user, roomId: this.state.room.id });
-		}
-		
+		emit('leave_room', { roomId: this.props.currentRoom._id, role: 'player' })
 		this.props.history.push('/');
 	}
 
-	componentDidMount() {
-		window.socket.on('update_room', this.updateRoom);
+	componentWillReceiveProps(nextProps) {
 
+	}
+
+	componentDidMount() {
+		const params = this.props.match.params		
+		 // get initial state of folring room
+		this.props.getCurrentRoom(params.roomId);
 
 	 // 	window.addEventListener("beforeunload", (ev) => 
 		// {  
@@ -54,33 +49,45 @@ export default class Folring extends Component {
 	}
 
 
-	updateRoom(room) {
-		console.log(room)
-		if (room.id === this.state.room.id) {
-			const newRoom = {...this.state.room, ...room};
-			this.setState({room: newRoom});
-		}		
-	}
-
 	componentWillUnmount() {
 		this.mounted = false;
-		window.socket.removeListener('update_room', this.updateRoom)
 	}
 
 	sendGame(game) {
-		window.socket.emit('update_room', game , this.props.user);
+		emit('update_room_game', { roomId: this.props.currentRoom._id, game: game})
+		// window.socket.emit('update_room', game , this.props.user);
 	}
 
 	render() {
+		console.log('RENDERING THE ROOM', this.props.currentRoom)
 		return (
 			<div className="game-holder">
 				<button className="leaveGame" onClick={this.leaveGame.bind(this)}></button>
-				<Users players={this.state.room.players} spectators={this.state.room.spectators}/>
-				<div className="folring-holder">
-					<Game sendGame={this.sendGame} room={this.state.room} user={this.props.user}/>
-				</div>	
-				<Messaging user={this.props.user} />
+				{ this.props.currentRoom ?
+				<div>
+					<Users players={this.props.currentRoom.players} spectators={this.props.currentRoom.spectators}/>
+					<div className="folring-holder">
+						<Game sendGame={this.sendGame} room={this.props.currentRoom} user={this.props.user}/>}
+					</div>	
+					{/*<Messaging user={this.props.user} />*/}
+				</div>
+				: null}
 			</div>
 		);
 	}
 }
+
+const mapStateToProps = (state) => {
+    return {
+    	currentRoom: state.currentRoom,
+    	user: state.user
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        getCurrentRoom
+    }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Folring);;

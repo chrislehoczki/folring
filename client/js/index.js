@@ -12,7 +12,7 @@ import {
 } from 'react-router-dom'
 
 // redux store
-import store, { history } from './store';
+import store from './store';
 
 import { Provider } from 'react-redux';
 

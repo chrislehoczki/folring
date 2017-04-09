@@ -8,7 +8,7 @@ const requireSignin = passport.authenticate('local', { session: false });
 
 import { tokenForUser } from '../controllers/authentication';
 import { getUser } from '../controllers/user';
-import { addRoom, getRoom, deleteRoom } from '../controllers/room';
+import { addRoom, getRoom, deleteRoom, getRooms } from '../controllers/room';
 
 // react
 import React from 'react'
@@ -58,6 +58,9 @@ module.exports = (app) => {
       .get(requireAuth, getRoom)
       .post(requireAuth, addRoom)
       .delete(requireAuth, deleteRoom);
+
+    app.route('/api/rooms')
+      .get(requireAuth, getRooms)
 
     app.get('*', (req, res) => {
       const store = createStore(rootReducer);

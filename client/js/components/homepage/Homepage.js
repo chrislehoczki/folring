@@ -1,12 +1,17 @@
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Room from './Room';
+
+import { listRooms } from '../../actions/rooms';
 
 if (process.env.BROWSER) {
 	require('./Homepage.css');
 }
 
-export default class Homepage extends Component {
+class Homepage extends Component {
 
 	constructor(props) {
 		super(props);
@@ -15,13 +20,16 @@ export default class Homepage extends Component {
 		}
 	}
 
+	componentDidMount() {
+		this.props.listRooms();
+	}
+
 	render() {
 		const rooms = this.props.rooms;
 		
 		let roomComponents = null;
-		if (this.state.showRooms && rooms) {
-			// const roomKeys = Object.keys(this.props.rooms);
-			// roomComponents = roomKeys.map((roomId) => <Room user={this.props.user} key={roomId} room={this.props.rooms[roomId]} history={this.props.history}/>)
+		if (rooms) {
+			roomComponents = rooms.map((room) => <Room {...this.props} key={room._id} room={room} />)
 		} 
 
 		return (
@@ -32,3 +40,17 @@ export default class Homepage extends Component {
 		);
 	}
 }
+
+const mapStateToProps = (state) => {
+    return {
+    	rooms: state.mainRooms
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        listRooms
+    }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Homepage);;

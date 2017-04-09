@@ -20,21 +20,6 @@ class App extends Component {
       user: null
     }
 
-    this.HomepageWrapper = (props) => {
-    return <Homepage {...props} rooms={this.state.rooms} user={this.state.user} />
-    }
-
-    this.ProfileWrapper = (props) => {
-       return <Profile {...props} user={this.state.user} />
-    }
-
-    this.FolringWrapper = (props) => {
-      return <Folring {...props} user={this.state.user} />
-   }
-
-   this.LoginWrapper = (props) => {
-      return <Login {...props} />
-   }
   }
 
   componentDidMount() {
@@ -56,11 +41,12 @@ class App extends Component {
   render() {
     return (
           <div>
-            <Nav user={this.state.user}/>
-            <Route exact path="/" component={this.LoginWrapper}/>
-            <Route path="/rooms" component={this.HomepageWrapper} />
-            <Route path="/profile" component={this.ProfileWrapper}/>
-            <Route path="/folring" component={this.FolringWrapper} />
+            <Nav />
+            <Route exact path="/" component={Login}/>
+            <Route path="/rooms" component={Homepage} />
+            <Route path="/room/:roomId?" component={Folring} />
+            <Route path="/profile" component={Profile}/>
+            <Route path="/folring" component={Folring} />
           </div>
       )
   }

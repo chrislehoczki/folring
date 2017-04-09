@@ -21,16 +21,20 @@ const io = require('socket.io-client')
 class Login extends Component {
 
 	componentDidMount() {
-		if (window.localStorage.apitoken) {
-			this.props.authenticateToken(window.localStorage.apitoken);
-		}
+		console.log('MOUNTING LOGIN')
 
-		const query = queryString.parse(this.props.location.search);
+			if (window.localStorage.apitoken) {
+				this.props.authenticateToken(window.localStorage.apitoken);
+			}
 
-		if (query.apitoken) {
-			window.localStorage.setItem('apitoken', query.apitoken);
-			this.props.authenticateToken(query.apitoken);
-		}
+			const query = queryString.parse(this.props.location.search);
+
+			if (query.apitoken) {
+				window.localStorage.setItem('apitoken', query.apitoken);
+				this.props.authenticateToken(query.apitoken);
+			}
+
+		
 
 	}
 

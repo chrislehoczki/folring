@@ -26,7 +26,7 @@ export function getRoom(req, res) {
 
     Room
       .findOne({ _id: req.params.roomId })
-      // .populate('owner', { name: 1, _id: 1 })
+      .populate('players spectators', { "facebook.displayName": 1, _id: 1 })
       .exec(function (err, room) {
         if (err) { 
           res.send({error: 'Error getting room'})
@@ -52,18 +52,93 @@ export function deleteRoom(req, res) {
         res.send('successfully removed room');
       }); 
 
-  // Room.findOneAndRemove({
-  //       _id: req.params.roomId
-  //   },
-  //       function (err, room) {
-  //           if (err) {
-  //               console.log(err)
-  //               res.send({error: 'Error removing room'});
-  //               return;
-  //           }
+}
 
-  //          res.send('removed it babay')
-  //       });
+export function getRooms(req, res) {
 
+  Room.find({})
+    .exec((err, rooms) => {
+      if (err) { 
+          res.send({error: 'Error listing rooms'})
+          return;
+       };
+        res.send(rooms);
+    })
+
+}
+
+export function db_joinRoom({userId, role, roomId}) {
+
+  return new Promise((resolve, reject) => {
+
+      let modifier;
+      if (role === 'player') {
+        modifier = { $addToSet: { players: userId } }
+      } else {
+        modifier = { $addToSet: {specators: userId } }
+      }
+
+      Room
+      .findOneAndUpdate({ _id: roomId }, modifier, {new: true})
+      .populate('players spectators', { "facebook.displayName": 1, _id: 1 })
+      .exec(function (err, room) {
+        if (err) { 
+          console.log(err)
+          reject({error: 'Error getting room'})
+       };
+        resolve(room);
+      }); 
+
+
+  })
+
+}
+
+export function db_leaveRoom({userId, role, roomId}) {
+  console.log('roomId', roomId, 'role', role)
+  return new Promise((resolve, reject) => {
+
+      let modifier;
+      if (role === 'player') {
+        modifier = { $pull: { players: userId } }
+      } else {
+        modifier = { $pull: {specators: userId } }
+      }
+
+      Room
+      .findOneAndUpdate({ _id: roomId }, modifier, {new: true})
+      .populate('players spectators', { "facebook.displayName": 1, _id: 1 })
+      .exec(function (err, room) {
+        if (err) { 
+          console.log(err)
+          reject({error: 'Error getting room'})
+       };
+        console.log(room)
+        resolve(room);
+      }); 
+
+  })
+
+}
+
+export function db_updateRoomGame({userId, roomId, game}) {
+   console.log('roomId', roomId, 'game', game)
+  return new Promise((resolve, reject) => {
+
+      let modifier = { game: game }
+
+      Room
+      .findOneAndUpdate({ _id: roomId }, modifier, {new: true})
+      .populate('players spectators', { "facebook.displayName": 1, _id: 1 })
+      .exec(function (err, room) {
+        if (err) { 
+          console.log(err)
+          reject({error: 'Error getting room'})
+       };
+        console.log(room)
+        resolve(room);
+      }); 
+
+  })
 
 }
