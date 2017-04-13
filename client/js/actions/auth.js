@@ -65,12 +65,14 @@ export function loginUser({email, password}) {
         console.log(err);
         dispatch({type: LOAD_USER, payload: null});
       });
-
-
-
     }
-   
+  
+}
 
+export function logoutUser() {
+
+  window.localStorage.removeItem('apitoken');
+  return { type: LOAD_USER, payload: null };
 
 }
 

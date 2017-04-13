@@ -61,6 +61,5 @@ export function getCurrentRoom(roomId) {
 }	
 
 export function updateCurrentRoom(config) {
-	console.log('CALLING UPDATE CURRENT ROOM')
 	return { type: UPDATE_CURRENT_ROOM, payload: config }
 }

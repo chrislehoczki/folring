@@ -14,7 +14,7 @@ export function addRoom(req, res) {
       return; 
     }
 
-    res.send({room: room});
+    res.send({_id: room._id, name: room.name});
 
    
   });
@@ -45,11 +45,22 @@ export function deleteRoom(req, res) {
       // .populate('owner', { name: 1, _id: 1 })
       .exec(function (err, room) {
         if (err) { 
-          res.send({error: 'Error getting room'})
+          res.send({error: 'Error deleting room'})
           return;
        };
-        room.remove();
-        res.send('successfully removed room');
+
+       if (!room) {
+        res.send({error: 'could not find room to remove'})
+       }
+
+
+        room.remove((err, removed) => {
+          if (err) {
+            res.send({error: 'error deleting room'})
+          }
+          res.send({roomId: removed._id});
+        });
+        
       }); 
 
 }
@@ -80,7 +91,7 @@ export function db_joinRoom({userId, role, roomId}) {
 
       Room
       .findOneAndUpdate({ _id: roomId }, modifier, {new: true})
-      .populate('players spectators', { "facebook.displayName": 1, _id: 1 })
+      .populate('players spectators', { "facebook.displayName": 1, username: 1, _id: 1 })
       .exec(function (err, room) {
         if (err) { 
           console.log(err)

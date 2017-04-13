@@ -45,7 +45,7 @@ class Login extends Component {
 					<p>Login With Facebook</p>
 				</a>
 				<LoginModal loginUser={this.props.loginUser}/>
-				<Link to="/signup"><button title="signup">Signup</button></Link>
+				<Link to="/signup"><button title="signup">Signup Instead</button></Link>
 				{this.props.user ?
 				<Redirect to={{
 			        pathname: '/rooms',

@@ -53,7 +53,7 @@ export default class LoginModal extends Component {
         };
 
         return (
-            <div id="login">
+            <div id="local-login">
                 <div className="content">
                     <div>
                         <h2>Login</h2>
@@ -61,7 +61,7 @@ export default class LoginModal extends Component {
                         <input onChange={this.changeEmail.bind(this)} type="email" placeholder="email" autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"/>
                         Password
                         <input onChange={this.changePassword.bind(this)} placeholder="password" type="password" autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"/>
-                        <button className="login" onClick={this.signinUser.bind(this)}>Login</button>
+                        <button onClick={this.signinUser.bind(this)}>Login</button>
                         { this.state.userMessage ? <p style={errorStyle}> { this.state.userMessage } </p> : null}
                     </div>
                 </div>

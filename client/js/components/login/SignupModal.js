@@ -87,7 +87,7 @@ class Signup extends Component {
 		};
 
 		return (
-			<div>
+			<div className="signup">
 			    <div className="content">
 			    	<div>
 				        <h2>Signup</h2>
@@ -99,9 +99,9 @@ class Signup extends Component {
 				        <input onChange={this.changePassword.bind(this)} type="password" placeholder="password" onBlur={this.checkPasswordFormat.bind(this)} autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false"/>
 				        <p className="label">Confirm Password</p>
 				        <input onChange={this.changePasswordMatch.bind(this)} type="password" placeholder="confirmed password" onBlur={this.checkPasswordMatch.bind(this)} autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" />
-				        <button onClick={this.signupUser.bind(this)} className="login">Signup</button>
+				        <button onClick={this.signupUser.bind(this)}>Signup</button>
 				        { this.state.userMessage ? <p style={errorStyle}> { this.state.userMessage } </p> : null}
-				      	<Link to="/"><button title="login">Login</button></Link>
+				      	<Link to="/"><button title="login">Login Instead</button></Link>
 				      	{this.props.user ?
 							<Redirect to={{
 						        pathname: '/rooms',
