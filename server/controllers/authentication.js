@@ -22,14 +22,14 @@ exports.signin = function(req, res, next) {
         return res.send({ error: loginError});
       }
 
-
-       const apitoken = tokenForUser(doc);
+       const apitoken = tokenForUser(user);
         const composedUser = {
-          _id: doc._id,
+          _id: user._id,
           apitoken: apitoken,
-          spectatingRooms: doc.spectatingRooms,
-          playingRooms: doc.playingRooms,
-          local: doc.local
+          spectatingRooms: user.spectatingRooms,
+          playingRooms: user.playingRooms,
+          ownedRooms: user.ownedRooms,
+          local: user.local
         };
       
       // Repond to request indicating the user was created

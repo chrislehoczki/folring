@@ -53,11 +53,11 @@ class Folring extends Component {
 	}
 
 	sendGame(game) {
+		console.log("UPDATING GAME")
 		emit('update_room_game', { roomId: this.props.currentRoom._id, game: game})
 	}
 
 	render() {
-		console.log('RENDERING THE ROOM', this.props.currentRoom)
 		return (
 			<div className="game-holder">
 				<button className="leaveGame" onClick={this.leaveGame.bind(this)}></button>

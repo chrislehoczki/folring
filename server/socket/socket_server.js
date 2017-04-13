@@ -61,7 +61,7 @@ function updateRoomGame(socket, {roomId, game}) {
 	db_updateRoomGame({userId, roomId, game})
 		.then((room) => {
 			console.log(room)
-			sio.to(room._id).emit('update_current_room', {game: game});
+			sio.to(room._id).emit('update_current_room', {game: game.game});
 		})
 		.catch((err) => {
 			// socket.emit('err', 'error joining room');

@@ -31,20 +31,21 @@ export default class Game extends React.Component {
     const board = document.querySelector('.folring-holder')
     board.style.height = board.offsetWidth+"px"
 
-    const messaging = document.querySelector('#messaging')
-    messaging.style.height = "calc(100% - "+parseInt(board.offsetWidth+54)+"px)"
+    // const messaging = document.querySelector('#messaging')
+    // messaging.style.height = "calc(100% - "+parseInt(board.offsetWidth+54)+"px)"
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.room.game) {
       // Determine which side the player is
       if (nextProps.user != undefined) {
-        if ( nextProps.user.id === nextProps.room.players[0].id) {
+
+        if ( nextProps.user._id === nextProps.room.players[0]._id) {
           this.playerSide = 0
           console.log("I AM BLACK")
         }
         if ( nextProps.room.players.length > 1 ) {
-          if (nextProps.user.id === nextProps.room.players[1].id) {
+          if (nextProps.user._id === nextProps.room.players[1]._id) {
             this.playerSide = 1
             console.log("I AM WHITE")
           }
@@ -58,14 +59,18 @@ export default class Game extends React.Component {
   }
 
   sendState() {
-    this.checkTheGame()
+    this.checkTheGame();
+    console.log('SENDING THE GAME')
     // Send game state to server
     this.props.sendGame({game: this.state})
   }
 
   handleClick(piece) {
+    console.log("HANDLING CLICK")
     // If it's not my turn, don't even process
     if (this.playerSide != this.state.turn) { return }
+
+      console.log("GETTING PAST PLAYER SIDE")
 
     const myPiece = this.playerSide === 0 ? 10 : 20
     const myPieceSelected = this.playerSide === 0 ? 11 : 21

@@ -14,7 +14,6 @@ export default class SingleRoom extends Component {
 			<div>
 				<p>{this.props.room.name}</p>
 				<button onClick={this.deleteRoom.bind(this)}>X</button>
-
 			</div>
 		);
 	}

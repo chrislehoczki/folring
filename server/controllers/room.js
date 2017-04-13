@@ -26,7 +26,7 @@ export function getRoom(req, res) {
 
     Room
       .findOne({ _id: req.params.roomId })
-      .populate('players spectators', { "facebook.displayName": 1, _id: 1 })
+      .populate('players spectators', { "facebook.displayName": 1, username: 1, _id: 1 })
       .exec(function (err, room) {
         if (err) { 
           res.send({error: 'Error getting room'})
@@ -118,7 +118,7 @@ export function db_leaveRoom({userId, role, roomId}) {
 
       Room
       .findOneAndUpdate({ _id: roomId }, modifier, {new: true})
-      .populate('players spectators', { "facebook.displayName": 1, _id: 1 })
+      .populate('players spectators', { "facebook.displayName": 1, username: 1, _id: 1 })
       .exec(function (err, room) {
         if (err) { 
           console.log(err)
@@ -136,11 +136,11 @@ export function db_updateRoomGame({userId, roomId, game}) {
    console.log('roomId', roomId, 'game', game)
   return new Promise((resolve, reject) => {
 
-      let modifier = { game: game }
+      let modifier = { game: game.game }
 
       Room
       .findOneAndUpdate({ _id: roomId }, modifier, {new: true})
-      .populate('players spectators', { "facebook.displayName": 1, _id: 1 })
+      .populate('players spectators', { "facebook.displayName": 1, username: 1, _id: 1 })
       .exec(function (err, room) {
         if (err) { 
           console.log(err)
