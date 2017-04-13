@@ -9,7 +9,9 @@ import Homepage from './homepage/Homepage';
 import Profile from './profile/Profile';
 import Folring from './folring/Folring';
 import Nav from './nav/Nav';
-import Login from './Login/login';
+import Login from './login/Login';
+import SignupModal from './login/SignupModal';
+import RouteWrapper from './animations/RouteWrapper';
 
 class App extends Component {
 
@@ -36,6 +38,7 @@ class App extends Component {
     // window.socket.on('user', (user) => {
     //   this.setState({user: user});
     // });
+
   }
 
   render() {
@@ -43,6 +46,7 @@ class App extends Component {
           <div>
             <Nav />
             <Route exact path="/" component={Login}/>
+            <Route path="/signup" component={SignupModal} />
             <Route path="/rooms" component={Homepage} />
             <Route path="/room/:roomId?" component={Folring} />
             <Route path="/profile" component={Profile}/>

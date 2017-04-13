@@ -55,7 +55,6 @@ class Folring extends Component {
 
 	sendGame(game) {
 		emit('update_room_game', { roomId: this.props.currentRoom._id, game: game})
-		// window.socket.emit('update_room', game , this.props.user);
 	}
 
 	render() {

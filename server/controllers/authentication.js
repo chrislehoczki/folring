@@ -22,25 +22,18 @@ exports.signin = function(req, res, next) {
         return res.send({ error: loginError});
       }
 
-      return res.json(user);
 
-      // populate playing rooms and spectating rooms for user
-
-      // user.populate('decks', function(err, populatedUser) {
-      //     if (err) {
-      //         res.send({err: true})
-      //     }
-          
-      //     const userData = {
-      //       username: populatedUser.username,
-      //       _id: populatedUser._id,
-      //       decks: populatedUser.decks,
-      //       uploads: populatedUser.uploads,
-      //       apitoken: tokenForUser(user)
-      //     };
-      //     
-
-      // });
+       const apitoken = tokenForUser(doc);
+        const composedUser = {
+          _id: doc._id,
+          apitoken: apitoken,
+          spectatingRooms: doc.spectatingRooms,
+          playingRooms: doc.playingRooms,
+          local: doc.local
+        };
+      
+      // Repond to request indicating the user was created
+      return res.json(composedUser);
       
   })(req, res, next);
 };
@@ -50,6 +43,7 @@ exports.signup = function(req, res, next) {
 
   const email = req.body.email;
   const password = req.body.password;
+  const username = req.body.username;
 
   // See if a user with the given email exists
   User.findOne({ email: email }, function(err, existingUser) {
@@ -62,8 +56,9 @@ exports.signup = function(req, res, next) {
 
     // If a user with email does NOT exist, create and save user record
     const user = new User({
-      email: email,
-      password: password
+          email: email,
+          password: password,
+          username: username
     });
 
     user.save(function(err, doc) {
@@ -75,7 +70,8 @@ exports.signup = function(req, res, next) {
         _id: doc._id,
         apitoken: apitoken,
         spectatingRooms: doc.spectatingRooms,
-        playingRooms: doc.playingRooms
+        playingRooms: doc.playingRooms,
+        local: doc.local
       };
       
       // Repond to request indicating the user was created

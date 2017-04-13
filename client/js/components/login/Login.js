@@ -7,10 +7,12 @@ import axios from 'axios';
 import queryString from 'query-string';
 
 import {
-  Redirect
+  Redirect, Link
 } from 'react-router-dom';
 
-import { authenticateToken } from '../../actions/auth';
+import { authenticateToken, loginUser } from '../../actions/auth';
+
+import LoginModal from './LoginModal';
 
 if (process.env.BROWSER) {
 	require('./Login.css');
@@ -33,24 +35,23 @@ class Login extends Component {
 				window.localStorage.setItem('apitoken', query.apitoken);
 				this.props.authenticateToken(query.apitoken);
 			}
-
-		
-
 	}
 
 	render() {
-		console.log('USER PROPS', this.props.user)
 		return (
 			<div className="login">
 				<a className="fbook-login" href="/auth/facebook">
 					<img src="/client/images/fb.png"/>
 					<p>Login With Facebook</p>
 				</a>
+				<LoginModal loginUser={this.props.loginUser}/>
+				<Link to="/signup"><button title="signup">Signup</button></Link>
 				{this.props.user ?
 				<Redirect to={{
 			        pathname: '/rooms',
 			        state: { from: this.props.location }
       			}}/> : null }
+
 			</div>
 		);
 	}
@@ -64,7 +65,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        authenticateToken
+        authenticateToken,
+        loginUser
     }, dispatch);
 };
 
