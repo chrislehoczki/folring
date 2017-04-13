@@ -23,7 +23,6 @@ export default class Folring extends Component {
 		this.sendGame = this.sendGame.bind(this);
 		this.updateRoom = this.updateRoom.bind(this);
 	}
-
 	
 	leaveGame() {
 		// const user = window.localStorage.user;
