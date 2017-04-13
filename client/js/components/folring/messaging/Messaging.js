@@ -43,8 +43,8 @@ export default class Messaging extends Component {
 
 		return (
 			<div id='messaging'>
-			{messages}
-			<MessageInput sendMessage={this.sendMessage} />
+				<MessageInput sendMessage={this.sendMessage} />
+				{messages}
 			</div>
 		);
 	}

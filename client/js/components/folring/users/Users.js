@@ -18,7 +18,7 @@ export default class Users extends Component {
 		return (
 			<div id="users">
 				{players}
-				<span>and {this.props.spectators.length} spectators</span>
+				<span style={{ display: 'none' }}>and {this.props.spectators.length} spectators</span>
 			</div>
 		);
 	}

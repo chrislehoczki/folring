@@ -24,7 +24,6 @@ class Folring extends Component {
 		this.query = queryString.parse(this.props.location.search);
 		this.sendGame = this.sendGame.bind(this);
 	}
-
 	
 	leaveGame() {
 		emit('leave_room', { roomId: this.props.currentRoom._id, role: 'player' })

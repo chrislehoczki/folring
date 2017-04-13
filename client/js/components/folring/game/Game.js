@@ -26,9 +26,17 @@ export default class Game extends React.Component {
     }
   }
 
+  componentDidMount() {
+    // Set correct height and vertical position for the game board
+    const board = document.querySelector('.folring-holder')
+    board.style.height = board.offsetWidth+"px"
+
+    const messaging = document.querySelector('#messaging')
+    messaging.style.height = "calc(100% - "+parseInt(board.offsetWidth+54)+"px)"
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.room.game) {
-
       // Determine which side the player is
       if (nextProps.user != undefined) {
         if ( nextProps.user.id === nextProps.room.players[0].id) {
@@ -42,23 +50,17 @@ export default class Game extends React.Component {
           }
         }
       }
-      console.log("TURN: ", this.state.turn)
-
       const newState = {...nextProps.room.game};
-      console.log('NEW GAME OBJECT', newState)
       this.setState({...newState}, () => {
         console.log("NEW STATE", this.state)
       });
-
-    this.checkTheGame()
     } 
   }
 
   sendState() {
+    this.checkTheGame()
     // Send game state to server
     this.props.sendGame({game: this.state})
-    // Look for winning
-    this.checkTheGame()
   }
 
   handleClick(piece) {
@@ -351,18 +353,36 @@ export default class Game extends React.Component {
       [11,15,22,25,21,14]
     ]
 
+    let winFound = false
+
+    const myPiece = this.playerSide === 0 ? 10 : 20
+    const opponentPiece = this.playerSide === 0 ? 20 : 10
+    // Check if I won
     winningsTable.map((circle,index) => {
       let count = 0
       circle.map((piece) => {
-        if (this.state.board[piece] === 10) { 
+        if (this.state.board[piece] === myPiece) { 
           count++ 
-          if (count === 6) {
-            alert("WIN")
-          }
         }
       })
+      if (count === 6) {
+        alert("I WON")
+        return false
+      }
     })
-
+    // Check if the other player won
+    winningsTable.map((circle,index) => {
+      let count = 0
+      circle.map((piece) => {
+        if (this.state.board[piece] === opponentPiece) { 
+          count++ 
+        }
+      })
+      if (count === 6) {
+        alert("I LOST")
+        return false
+      }
+    })
   }
 
   render() {
@@ -375,8 +395,7 @@ export default class Game extends React.Component {
 
     return (
       <div className={boardClass}>
-        <div className="pieceCount">You have {this.state.piecesLeft} pieces left</div>
-        <div className="background"></div>
+        <div className="background"><div className="pieceCount">You have {this.state.piecesLeft} pieces left</div></div>
         {pieces}
       </div>
     )
