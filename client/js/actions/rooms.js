@@ -43,7 +43,7 @@ export function getCurrentRoom(roomId) {
 	      .then(response => {
 	        if (response.error) {
 	          console.log(response.error);
-	          dispatch({type: LOAD_CURRENT_ROOM, payload: {}});
+	          dispatch({type: LOAD_CURRENT_ROOM, payload: null});
 	        } else {
 	          dispatch({
 	            type: LOAD_CURRENT_ROOM,
@@ -54,14 +54,16 @@ export function getCurrentRoom(roomId) {
 	   
 	      }).catch(err => {
 	      	console.log(err);
-	        dispatch({type: LOAD_CURRENT_ROOM, payload: {}});
+	        dispatch({type: LOAD_CURRENT_ROOM, payload: null});
 	      });
     }
 
 }	
 
-export function updateCurrentRoom(config) {
-	console.log("CONFIG TO UPDATE", config)
+export function loadCurrentRoom(room) {
+	return {type: LOAD_CURRENT_ROOM, payload: null};
+}
 
+export function updateCurrentRoom(config) {
 	return { type: UPDATE_CURRENT_ROOM, payload: config }
 }

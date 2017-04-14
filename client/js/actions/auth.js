@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 
-import { LOAD_USER } from './types';
+import { LOAD_USER, LOAD_CURRENT_ROOM } from './types';
 
 import{ connect_socket } from './socket';
 
@@ -24,6 +24,7 @@ export function authenticateToken(token) {
             type: LOAD_USER,
             payload: response.data
           });
+          dispatch({ type: LOAD_CURRENT_ROOM, payload: response.data.playingRooms[0] || null })
 
           connect_socket();
 
@@ -56,6 +57,7 @@ export function loginUser({email, password}) {
             type: LOAD_USER,
             payload: response.data
           });
+          dispatch({ type: LOAD_CURRENT_ROOM, payload: response.data.playingRooms[0] || null })
           window.localStorage.setItem('apitoken', response.data.apitoken)
           connect_socket();
 
@@ -95,6 +97,7 @@ export function signupUser({username, email, password}) {
             type: LOAD_USER,
             payload: response.data
           });
+          dispatch({ type: LOAD_CURRENT_ROOM, payload: response.data.playingRooms[0] || null })
           window.localStorage.setItem('apitoken', response.data.apitoken)
           connect_socket();
 
@@ -104,13 +107,13 @@ export function signupUser({username, email, password}) {
         console.log(err);
         dispatch({type: LOAD_USER, payload: null});
       });
-
-
-
     }
-   
+  
 
+}
 
+export function loadUser(user) {
+    return { type: LOAD_USER, payload: user }
 }
 
 

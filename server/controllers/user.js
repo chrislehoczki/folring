@@ -6,7 +6,7 @@ export function getUser(req, res) {
 
     User
         .findOne({ _id: req.user._id }, { password: 0})
-        .populate('ownedRooms', { name: 1, _id: 1 })
+        .populate('ownedRooms playingRooms')
         .exec(function (err, userDoc) {
           if (err) { 
             res.send({error: true})

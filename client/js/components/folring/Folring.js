@@ -11,7 +11,7 @@ import Users from './users/Users.js';
 
 import queryString from 'query-string';
 
-import { getCurrentRoom } from '../../actions/rooms';
+import { getCurrentRoom, loadCurrentRoom } from '../../actions/rooms';
 
 if (process.env.BROWSER) {
   require('./Folring.css');
@@ -27,11 +27,8 @@ class Folring extends Component {
 	
 	leaveGame() {
 		emit('leave_room', { roomId: this.props.currentRoom._id, role: 'player' })
+		this.props.loadCurrentRoom(null);
 		this.props.history.push('/');
-	}
-
-	componentWillReceiveProps(nextProps) {
-
 	}
 
 	componentDidMount() {
@@ -53,7 +50,6 @@ class Folring extends Component {
 	}
 
 	sendGame(game) {
-		console.log("UPDATING GAME")
 		emit('update_room_game', { roomId: this.props.currentRoom._id, game: game})
 	}
 
@@ -84,7 +80,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        getCurrentRoom
+        getCurrentRoom,
+        loadCurrentRoom
     }, dispatch);
 };
 

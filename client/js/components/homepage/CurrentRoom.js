@@ -7,16 +7,15 @@ import { emit } from '../../actions/socket';
 
 export default class Room extends Component {
 
-	joinRoom(playerNo, e) {
-		console.log(this.props);
+	joinRoom() {
 		emit('join_room', {roomId: this.props.room._id, role: 'player'});
 		this.props.history.push(`/room/${this.props.room._id}`);
 	}
 
-	spectateRoom() {
-		const user = this.props.user;
-		emit('join_room', {roomId: this.props.room._id, role: 'spectator'});
-		this.props.history.push('/folring?userType=spectator');
+	leaveRoom() {
+		emit('leave_room', { roomId: this.props.room._id, role: 'player' })
+		this.props.loadCurrentRoom(null);
+		this.props.history.push(`/rooms`);
 	}
 
 	render() {
@@ -29,7 +28,8 @@ export default class Room extends Component {
 					<div className="roomID" style={{ display: 'none' }}>{room.id}</div>
 					{room.players[0] ? <div className="avatar black" title={room.players[0].username}></div> : <button className="play black" title="Play as black" onClick={this.joinRoom.bind(this, 0)}></button>}
 					{room.players[1] ? <div className="avatar white" title={room.players[1].username}></div> : <button className="play white" title="Play as white" onClick={this.joinRoom.bind(this, 1)}></button>}
-					{/*<button className="spectate" title={`${this.props.room.spectators.length} spectators`} onClick={this.spectateRoom.bind(this)}><span>{this.props.room.spectators.length}</span></button>*/}
+					<button title={'rejoin room'} onClick={this.joinRoom.bind(this)}>Rejoin Room</button>
+					<button title={'leave room'} onClick={this.leaveRoom.bind(this)}>Leave Room</button>
 				</div>
 			</div>
 		);

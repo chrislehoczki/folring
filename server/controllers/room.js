@@ -97,7 +97,18 @@ export function db_joinRoom({userId, role, roomId}) {
           console.log(err)
           reject({error: 'Error getting room'})
        };
-        resolve(room);
+
+        User.findOneAndUpdate({ _id: userId }, { $addToSet: { playingRooms: roomId } }, {new: true})
+        .populate('playingRooms')
+        .exec(function(err, user) {
+
+           if (err) { 
+              console.log(err)
+              reject({error: 'error updating user playing rooms'})
+           };
+
+          resolve({room, user});
+        })
       }); 
 
 
@@ -124,8 +135,18 @@ export function db_leaveRoom({userId, role, roomId}) {
           console.log(err)
           reject({error: 'Error getting room'})
        };
-        console.log(room)
-        resolve(room);
+
+        User.findOneAndUpdate({ _id: userId }, { $pull: { playingRooms: roomId } }, {new: true})
+        .populate('playingRooms')
+        .exec(function(err, user) {
+
+           if (err) { 
+              console.log(err)
+              reject({error: 'error updating user playing rooms'})
+           };
+
+          resolve({room, user});
+        })
       }); 
 
   })

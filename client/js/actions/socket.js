@@ -1,14 +1,13 @@
 const io = require('socket.io-client');
 
 import { updateCurrentRoom } from './rooms';
+import { displayNotification } from './notifications';
+import { loadUser } from './auth';
 
 let store;
 if (process.env.BROWSER) {
   store = require('../store').default;
 }
-
-console.log('STORE', store)
-
 
 let socket = null;
 
@@ -21,8 +20,10 @@ export function connect_socket () {
         //do other things
         console.log('authenticated user');
         socket.on('update_current_room', (config) => store.dispatch(updateCurrentRoom(config)));
-        // listen for  events and update store here
+        
+        socket.on('notification_win', (config) => displayNotification(`${config.winner} won!`));
 
+        socket.on('update_user', (user) => store.dispatch(loadUser(user)));
       })
       .on('unauthorized', function(msg) {
         console.log("unauthorized: " + JSON.stringify(msg.data));

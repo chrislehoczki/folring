@@ -8,7 +8,7 @@ const roomSchema = new Schema({
   name: String,
   creator: { type: Schema.Types.ObjectId, ref: 'user' },
   messages: Array,
-  game: Array,
+  game: { type: Object, default: {} },
   players: {
     type: [{ type: Schema.Types.ObjectId, ref: 'user' }], 
     validate: [playerLimit, '{PATH} exceeds the limit of 2']
@@ -16,7 +16,8 @@ const roomSchema = new Schema({
   spectators: [{ type: Schema.Types.ObjectId, ref: 'user' }]
 },
 {
-  timestamps: true
+  timestamps: true,
+  minimize: false
 });
 
 function playerLimit(val) {

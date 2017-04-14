@@ -4,15 +4,16 @@ const bcrypt = require('bcrypt-nodejs');
 
 // Define our model
 const userSchema = new Schema({
-  
-  
   ownedRooms: [{ type: Schema.Types.ObjectId, ref: 'room' }],
   playingRooms: [{ type: Schema.Types.ObjectId, ref: 'room' }],
   spectatingRooms: [{ type: Schema.Types.ObjectId, ref: 'room' }],
   facebook: Object,
   username: { type: String },
   email: { type: String, sparse: true, unique: true, lowercase: true },
-  password: String
+  password: String,
+  wins: Number,
+  losses: Number,
+  games: Number
 },
 {
   timestamps: true

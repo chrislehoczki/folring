@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Room from './Room';
+import CurrentRoom from './CurrentRoom';
 
-import { listRooms } from '../../actions/rooms';
+import { listRooms, loadCurrentRoom } from '../../actions/rooms';
 
 if (process.env.BROWSER) {
 	require('./Homepage.css');
@@ -21,6 +22,10 @@ class Homepage extends Component {
 	}
 
 	componentDidMount() {
+		this.refreshRooms();
+	}
+
+	refreshRooms() {
 		this.props.listRooms();
 	}
 
@@ -32,9 +37,18 @@ class Homepage extends Component {
 			roomComponents = rooms.map((room) => <Room {...this.props} key={room._id} room={room} />)
 		} 
 
+		let currentRoom = null;
+		
+		if (this.props.currentRoom) {
+			currentRoom = <CurrentRoom {...this.props} loadCurrentRoom={this.props.loadCurrentRoom} room={this.props.currentRoom} />
+		}
+
 		return (
 			<div className="homepage">
-				<h1>The App</h1>
+				<button onClick={this.refreshRooms.bind(this)}>Refresh Rooms</button>
+				<h1> Current Room </h1>
+				{ currentRoom }
+				<h1> All Rooms </h1>
 				{roomComponents}
 			</div>
 		);
@@ -43,13 +57,16 @@ class Homepage extends Component {
 
 const mapStateToProps = (state) => {
     return {
-    	rooms: state.mainRooms
+    	rooms: state.mainRooms,
+    	currentRoom: state.currentRoom,
+    	user: state.user
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        listRooms
+        listRooms,
+        loadCurrentRoom
     }, dispatch);
 };
 

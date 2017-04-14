@@ -2,6 +2,7 @@ var socketioJwt = require('socketio-jwt');
 var socketIo = require('socket.io');
 
 import { db_joinRoom, db_leaveRoom, db_updateRoomGame } from '../controllers/room';
+import { checkGameWin } from '../controllers/game';
 
 module.exports = function socketSetup(server) {
 
@@ -31,8 +32,10 @@ function joinRoom(socket, {roomId, role}) {
 	const userId = socket.decoded_token.sub;
 	socket.join(roomId);
 	db_joinRoom({userId, role, roomId})
-		.then((room) => {
-			console.log('EMITTING UPDATE ROOM', room)
+		.then(({room, user}) => {
+			// update user
+			socket.emit('update_user', user)	
+			// update room
 			sio.to(room._id).emit('update_current_room', {players: room.players, spectators: room.spectators});
 		})
 		.catch((err) => {
@@ -46,8 +49,10 @@ function leaveRoom(socket, {roomId, role}) {
 	const userId = socket.decoded_token.sub;
 	socket.leave(roomId);
 	db_leaveRoom({userId, role, roomId})
-		.then((room) => {
-			console.log("ROOM INFO", room)
+		.then(({room, user}) => {
+			// update user
+			socket.emit('update_user', user);
+			// update room
 			sio.to(room._id).emit('update_current_room', {players: room.players, spectators: room.spectators});
 		})
 		.catch((err) => {
@@ -60,7 +65,17 @@ function updateRoomGame(socket, {roomId, game}) {
 	const userId = socket.decoded_token.sub;
 	db_updateRoomGame({userId, roomId, game})
 		.then((room) => {
-			console.log(room)
+			// check for game win
+			const winner = checkGameWin(game.game.board);
+			if (!winner) {
+				console.log('NO WINNER');
+			} else {
+				sio.to(room._id).emit('notification_win', { winner });
+
+			}
+
+
+
 			sio.to(room._id).emit('update_current_room', {game: game.game});
 		})
 		.catch((err) => {
@@ -69,4 +84,11 @@ function updateRoomGame(socket, {roomId, game}) {
 		})
 
 }
+
+function storeGameWin(socket, {roomId, winnerId, loserId}) {
+	
 }
+
+}
+
+
