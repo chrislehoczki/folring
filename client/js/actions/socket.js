@@ -23,6 +23,8 @@ export function connect_socket () {
         
         socket.on('notification_win', (config) => displayNotification(`${config.winner} won!`));
 
+        socket.on('notification', (notification) => displayNotification(notification));
+
         socket.on('update_user', (user) => store.dispatch(loadUser(user)));
       })
       .on('unauthorized', function(msg) {

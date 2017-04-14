@@ -71,6 +71,7 @@ exports.signup = function(req, res, next) {
         apitoken: apitoken,
         spectatingRooms: doc.spectatingRooms,
         playingRooms: doc.playingRooms,
+        ownedRooms: doc.ownedRooms,
         local: doc.local
       };
       

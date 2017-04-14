@@ -15,3 +15,37 @@ export function getUser(req, res) {
           res.send(userDoc);
         });     
 }
+
+export function addWin(_id) {
+    return new Promise((resolve, reject) => {
+
+         User
+        .findOneAndUpdate({ _id }, { $inc : {wins: 1, games: 1}}, { new: true})
+        .populate('ownedRooms playingRooms')
+        .exec(function (err, userDoc) {
+          if (err) { 
+            reject(err);
+            return;
+         };
+          resolve(userDoc);
+        });   
+
+    })
+}
+
+export function addLoss(_id) {
+   return new Promise((resolve, reject) => {
+
+         User
+        .findOneAndUpdate({ _id }, { $inc : {losses: 1, games: 1}}, {new: true})
+        .populate('ownedRooms playingRooms')
+        .exec(function (err, userDoc) {
+          if (err) { 
+            reject(err);
+            return;
+         };
+          resolve(userDoc);
+        });   
+
+    })
+}

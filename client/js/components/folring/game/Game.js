@@ -27,7 +27,7 @@ export default class Game extends React.Component {
     //   // 20 - player 2 piece (white)
     //   // 21 - player 2 piece selected
     // }
-    this.state = newGame;
+    this.state = winGame;
   }
 
   componentDidMount() {

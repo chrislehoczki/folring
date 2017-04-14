@@ -3,6 +3,7 @@ import Room from '../models/room';
 
 import newGame from '../../client/js/helpers/new_game';
 
+
 export function addRoom(req, res) {
   const roomName = req.body.roomName;
   const _id = req.user._id;
@@ -170,6 +171,27 @@ export function db_updateRoomGame({userId, roomId, game}) {
           reject({error: 'Error getting room'})
        };
         console.log(room)
+        resolve(room);
+      }); 
+
+  })
+
+}
+
+
+export function db_restartRoomGame({roomId}) {
+  return new Promise((resolve, reject) => {
+
+      let modifier = { game: newGame }
+
+      Room
+      .findOneAndUpdate({ _id: roomId }, modifier, {new: true})
+      .populate('players spectators', { "facebook.displayName": 1, username: 1, _id: 1 })
+      .exec(function (err, room) {
+        if (err) { 
+          console.log(err)
+          reject({error: 'Error getting room'})
+       };
         resolve(room);
       }); 
 
