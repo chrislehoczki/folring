@@ -8,10 +8,15 @@ import { bindActionCreators } from 'redux';
 
 import { logoutUser } from '../../actions/auth';
 
+if (process.env.BROWSER) {
+	require('./Nav.css');
+}
+
 class Nav extends Component {
 
 	logout() {
 		this.props.logoutUser();
+		this.props.history.push(`/`);
 	}
 
 	render() {
@@ -22,7 +27,7 @@ class Nav extends Component {
 	       		<Link to="/rooms"><button className="home" title="home"></button></Link>
 	       		<Link to="/profile"><button className="profile" title="profile"></button></Link>
 	       		<button onClick={this.logout.bind(this)}>Logout</button> 
-			  	</div>
+			</div>
 	  		: null }
   		</div>
 		);

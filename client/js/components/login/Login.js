@@ -47,10 +47,10 @@ class Login extends Component {
 				<LoginModal loginUser={this.props.loginUser}/>
 				<Link to="/signup"><button title="signup">Signup Instead</button></Link>
 				{this.props.user ?
-				<Redirect to={{
-			        pathname: '/rooms',
-			        state: { from: this.props.location }
-      			}}/> : null }
+					<Redirect to={{
+				        pathname: '/rooms',
+				        state: { from: this.props.location }
+	      			}}/> : null }
 
 			</div>
 		);

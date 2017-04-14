@@ -24,7 +24,7 @@ export default class Room extends Component {
 		return (
 			<div className="room">
 				<p>{room.name}</p>
-				{/*<MiniFolring room={room}/>*/}
+				<MiniFolring room={room}/>
 				<div className="roomInfo">
 					<div className="roomID" style={{ display: 'none' }}>{room.id}</div>
 					{room.players[0] ? <div className="avatar black" title={room.players[0].username}></div> : <button className="play black" title="Play as black" onClick={this.joinRoom.bind(this, 0)}></button>}

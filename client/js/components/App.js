@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
+  Redirect
 } from 'react-router-dom'
+
 
 import Homepage from './homepage/Homepage';
 import Profile from './profile/Profile';
@@ -44,7 +46,8 @@ class App extends Component {
   render() {
     return (
           <div>
-            <Nav />
+            <Route path="*" component={Nav} />
+            <div className="nav-separator"></div>
             <Route exact path="/" component={Login}/>
             <Route path="/signup" component={SignupModal} />
             <Route path="/rooms" component={Homepage} />
