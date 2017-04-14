@@ -10,6 +10,8 @@ export function listRooms(query) {
 	      headers: { authorization: window.localStorage.apitoken }
 	    };
 
+	    console.log('API/rooms options', options);
+
 	    axios.get(url, options)
 	      .then(response => {
 	        if (response.error) {

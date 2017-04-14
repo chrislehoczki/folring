@@ -1,6 +1,8 @@
 import User from '../models/user';
 import Room from '../models/room';
 
+import newGame from '../../client/js/helpers/new_game';
+
 export function addRoom(req, res) {
   const roomName = req.body.roomName;
   const _id = req.user._id;
@@ -117,12 +119,12 @@ export function db_joinRoom({userId, role, roomId}) {
 }
 
 export function db_leaveRoom({userId, role, roomId}) {
-  console.log('roomId', roomId, 'role', role)
+
   return new Promise((resolve, reject) => {
 
       let modifier;
       if (role === 'player') {
-        modifier = { $pull: { players: userId } }
+        modifier = { $pull: { players: userId }, $set: { game: newGame } }
       } else {
         modifier = { $pull: {specators: userId } }
       }

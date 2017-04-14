@@ -3,12 +3,14 @@ const Schema = mongoose.Schema;
 
 import User from './user';
 
+import newGame from '../../client/js/helpers/new_game';
+
 // Define our model
 const roomSchema = new Schema({
   name: String,
   creator: { type: Schema.Types.ObjectId, ref: 'user' },
   messages: Array,
-  game: { type: Object, default: {} },
+  game: { type: Object, default: newGame },
   players: {
     type: [{ type: Schema.Types.ObjectId, ref: 'user' }], 
     validate: [playerLimit, '{PATH} exceeds the limit of 2']

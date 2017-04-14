@@ -52,13 +52,14 @@ export function loginUser({email, password}) {
           console.log(response.data.error);
           window.localStorage.removeItem('apitoken');
         } else {
+          window.localStorage.setItem('apitoken', response.data.apitoken)
           console.log(response.data);
           dispatch({
             type: LOAD_USER,
             payload: response.data
           });
           dispatch({ type: LOAD_CURRENT_ROOM, payload: response.data.playingRooms[0] || null })
-          window.localStorage.setItem('apitoken', response.data.apitoken)
+          
           connect_socket();
 
         }
@@ -92,13 +93,14 @@ export function signupUser({username, email, password}) {
           console.log(response.data.error);
           window.localStorage.removeItem('apitoken');
         } else {
+          window.localStorage.setItem('apitoken', response.data.apitoken)
           console.log(response.data);
           dispatch({
             type: LOAD_USER,
             payload: response.data
           });
           dispatch({ type: LOAD_CURRENT_ROOM, payload: response.data.playingRooms[0] || null })
-          window.localStorage.setItem('apitoken', response.data.apitoken)
+          
           connect_socket();
 
         }

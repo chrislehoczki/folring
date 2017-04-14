@@ -53,7 +53,7 @@ function leaveRoom(socket, {roomId, role}) {
 			// update user
 			socket.emit('update_user', user);
 			// update room
-			sio.to(room._id).emit('update_current_room', {players: room.players, spectators: room.spectators});
+			sio.to(room._id).emit('update_current_room', {players: room.players, spectators: room.spectators, game: room.game});
 		})
 		.catch((err) => {
 			// socket.emit('err', 'error joining room');
