@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { logoutUser } from '../../actions/auth';
+import { updateUI } from '../../actions/ui';
 
 if (process.env.BROWSER) {
 	require('./Nav.css');
@@ -16,6 +17,7 @@ class Nav extends Component {
 
 	logout() {
 		this.props.logoutUser();
+		this.props.updateUI({login: true});
 		this.props.history.push(`/`);
 	}
 
@@ -26,7 +28,7 @@ class Nav extends Component {
 	      	<div className="nav">
 	       		<Link to="/rooms"><button className="home" title="home"></button></Link>
 	       		<Link to="/profile"><button className="profile" title="profile"></button></Link>
-	       		<button onClick={this.logout.bind(this)}>Logout</button> 
+	       		<button className="logout" onClick={this.logout.bind(this)}>Logout</button> 
 			</div>
 	  		: null }
   		</div>
@@ -43,7 +45,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        logoutUser
+        logoutUser,
+        updateUI
     }, dispatch);
 };
 

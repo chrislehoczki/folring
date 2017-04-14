@@ -11,6 +11,7 @@ import {
 } from 'react-router-dom';
 
 import { authenticateToken, loginUser } from '../../actions/auth';
+import { updateUI } from '../../actions/ui';
 
 import LoginModal from './LoginModal';
 
@@ -23,29 +24,33 @@ const io = require('socket.io-client')
 class Login extends Component {
 
 	componentDidMount() {
-		console.log('MOUNTING LOGIN')
+		if (window.localStorage.apitoken) {
+			this.props.authenticateToken(window.localStorage.apitoken);
+		} else {
+			this.props.updateUI({login: true});
+		}
 
-			if (window.localStorage.apitoken) {
-				this.props.authenticateToken(window.localStorage.apitoken);
-			}
+		const query = queryString.parse(this.props.location.search);
 
-			const query = queryString.parse(this.props.location.search);
-
-			if (query.apitoken) {
-				window.localStorage.setItem('apitoken', query.apitoken);
-				this.props.authenticateToken(query.apitoken);
-			}
+		if (query.apitoken) {
+			window.localStorage.setItem('apitoken', query.apitoken);
+			this.props.authenticateToken(query.apitoken);
+		}
 	}
 
 	render() {
 		return (
 			<div className="login">
-				<a className="fbook-login" href="/auth/facebook">
-					<img src="/client/images/fb.png"/>
-					<p>Login With Facebook</p>
-				</a>
-				<LoginModal loginUser={this.props.loginUser}/>
-				<Link to="/signup"><button title="signup">Signup Instead</button></Link>
+				{ this.props.ui.login ?
+				<div>
+					<a className="fbook-login" href="/auth/facebook">
+						<img src="/client/images/fb.png"/>
+						<p>Login With Facebook</p>
+					</a>
+					<LoginModal loginUser={this.props.loginUser}/>
+					<Link to="/signup"><button title="signup">Signup Instead</button></Link>
+				</div>
+				: null }
 				{this.props.user ?
 					<Redirect to={{
 				        pathname: '/rooms',
@@ -59,14 +64,16 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
     return {
-    	user: state.user
+    	user: state.user,
+    	ui: state.ui
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         authenticateToken,
-        loginUser
+        loginUser,
+        updateUI
     }, dispatch);
 };
 

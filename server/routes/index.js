@@ -71,7 +71,7 @@ module.exports = (app) => {
             <ReactApp />
           </StaticRouter>
         </Provider>);
-        res.send(createPage(html));
+        res.send(createPage(html, preloadedState));
       });
 
   	
@@ -81,7 +81,7 @@ module.exports = (app) => {
 
 
 
-function createPage(html) {
+function createPage(html, preloadedState) {
   let scripts, staticCss;
 
   if (process.env.NODE_ENV === 'development') { 
@@ -104,7 +104,11 @@ function createPage(html) {
     </head>
     <body>
       <div id="root">${html}</div>
+      <script>
+          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
+      </script>
       ${scripts}
+
     </body>
     </html>`;
 

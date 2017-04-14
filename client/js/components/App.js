@@ -47,7 +47,6 @@ class App extends Component {
     return (
           <div>
             <Route path="*" component={Nav} />
-            <div className="nav-separator"></div>
             <Route exact path="/" component={Login}/>
             <Route path="/signup" component={SignupModal} />
             <Route path="/rooms" component={Homepage} />
