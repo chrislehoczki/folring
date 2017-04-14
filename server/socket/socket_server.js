@@ -14,6 +14,7 @@ module.exports = function socketSetup(server) {
 	    secret: process.env.SECRET,
 	    timeout: 15000 // 15 seconds to send the authentication message
 		  })).on('authenticated', function(socket) {
+  			console.log(socket);
 		    //this socket is authenticated, we are good to handle more events from it.
 		    const userId = socket.decoded_token.sub;
 		    console.log('hello! ' + JSON.stringify(socket.decoded_token));
@@ -73,7 +74,7 @@ function updateRoomGame(socket, {roomId, game}) {
 			if (!winner) {
 				console.log('NO WINNER');
 			} else {
-				// sio.to(room._id).emit('notification_win', { winner });
+				sio.to(room._id).emit('notification_win', { winner });
 				let winnerId, loserId;
 				if (winner === 'black') {
 					winnerId = room.players[0]._id;
@@ -86,15 +87,17 @@ function updateRoomGame(socket, {roomId, game}) {
 				// need to find way to send to both players in the room - not just the one sending the data
 				storeGameWin(socket, { roomId, winnerId, loserId })
 					.then((data) => {
-						if (JSON.stringify(userId) === JSON.stringify(winnerId)) {
-							console.log("WON")
-							socket.emit('update_user', data[0]);
-							socket.emit('notification', 'You won');
-						} else {
-							console.log("LOST")
-							socket.emit('notification', 'You lost');
-							socket.emit('update_user', data[1]);
-						}
+						// const { sockets, length } = sio.sockets.adapter;
+						console.log(JSON.stringify(sio.sockets.adapter.sockets))
+						// if (JSON.stringify(userId) === JSON.stringify(winnerId)) {
+						// 	console.log("WON")
+						// 	socket.emit('update_user', data[0]);
+						// 	socket.emit('notification', 'You won');
+						// } else {
+						// 	console.log("LOST")
+						// 	socket.emit('notification', 'You lost');
+						// 	socket.emit('update_user', data[1]);
+						// }
 
 						// refresh the room back to 0
 						sio.to(room._id).emit('update_current_room', data[2]);

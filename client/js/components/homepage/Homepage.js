@@ -38,16 +38,18 @@ class Homepage extends Component {
 		} 
 
 		let currentRoom = null;
+
+		const currentRooms = this.props.user.playingRooms.map((room) => <CurrentRoom {...this.props} loadCurrentRoom={this.props.loadCurrentRoom} room={room} />)
 		
-		if (this.props.currentRoom) {
-			currentRoom = <CurrentRoom {...this.props} loadCurrentRoom={this.props.loadCurrentRoom} room={this.props.currentRoom} />
-		}
+		// if (this.props.currentRoom) {
+		// 	currentRoom = <CurrentRoom {...this.props} loadCurrentRoom={this.props.loadCurrentRoom} room={this.props.currentRoom} />
+		// }
 
 		return (
 			<div className="homepage">
 				<button onClick={this.refreshRooms.bind(this)}>Refresh Rooms</button>
-				<h1> Current Room </h1>
-				{ currentRoom }
+				<h1> Current Playing Rooms </h1>
+				{ currentRooms }
 				<h1> All Rooms </h1>
 				{roomComponents}
 			</div>

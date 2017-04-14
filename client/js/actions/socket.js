@@ -18,7 +18,6 @@ export function connect_socket () {
       .emit('authenticate', {token: window.localStorage.apitoken }) //send the jwt
       .on('authenticated', function () {
         //do other things
-        console.log('authenticated user');
         socket.on('update_current_room', (config) => store.dispatch(updateCurrentRoom(config)));
         
         socket.on('notification_win', (config) => displayNotification(`${config.winner} won!`));
@@ -29,6 +28,7 @@ export function connect_socket () {
       })
       .on('unauthorized', function(msg) {
         console.log("unauthorized: " + JSON.stringify(msg.data));
+        displayNotification('Sorry - you weren\'t authorised to use Folring with those credentials. Try logging in again.')
         throw new Error(msg.data.type);
       })
 });

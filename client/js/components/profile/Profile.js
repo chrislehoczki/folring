@@ -29,10 +29,18 @@ class Profile extends Component {
 
 		const displayName = this.props.user.facebook ? this.props.user.facebook.displayName : this.props.user.username;
 		
+		const wins = this.props.user.wins || 0;
+		const losses = this.props.user.losses || 0;
+		let winPercentage = (100 / (wins + losses)) * wins || 0;
+		winPercentage = winPercentage.toFixed(1)
 		return (
 			<div>
 				<h1>Profile</h1>
-				<p>{displayName}</p>
+				<p>Name: {displayName}</p>
+				<p>Wins: {wins}</p>
+				<p>Losses: {losses}</p>
+				<p>Win Rate: {winPercentage}%</p>
+
 				<h2> Owned Rooms </h2>
 				<input ref="roomName" placeholder="add room" />
 				<button onClick={this.addRoom.bind(this)}>Add</button>
