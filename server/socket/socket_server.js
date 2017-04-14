@@ -14,6 +14,7 @@ module.exports = function socketSetup(server) {
 	    secret: process.env.SECRET,
 	    timeout: 15000 // 15 seconds to send the authentication message
 		  })).on('authenticated', function(socket) {
+  			socket._id = socket.decoded_token.sub; 
   			console.log(socket);
 		    //this socket is authenticated, we are good to handle more events from it.
 		    const userId = socket.decoded_token.sub;
@@ -35,6 +36,12 @@ function joinRoom(socket, {roomId, role}) {
 	socket.join(roomId);
 	db_joinRoom({userId, role, roomId})
 		.then(({room, user}) => {
+
+			// console.log(Object.keys(sio.sockets.adapter.rooms["ROOM_NAME"].sockets));
+
+			
+			// socket.to(<socketid>).emit('hey', 'I just met you');
+
 			// update user
 			socket.emit('update_user', user)	
 			// update room
@@ -42,7 +49,7 @@ function joinRoom(socket, {roomId, role}) {
 		})
 		.catch((err) => {
 			// socket.emit('err', 'error joining room');
-			console.log('err')
+			console.log(err)
 		})
 
 }
@@ -87,8 +94,24 @@ function updateRoomGame(socket, {roomId, game}) {
 				// need to find way to send to both players in the room - not just the one sending the data
 				storeGameWin(socket, { roomId, winnerId, loserId })
 					.then((data) => {
+
+						// console.log(sio.sockets.in(roomId))
+						const socketIds = Object.keys(sio.sockets.in(roomId));
+
+						socketIds.forEach((socketId, i) => {
+
+							const socket = sio.sockets.in(roomId)[socketId];
+							console.log("SOCKET " + i, socket._id)
+							if (socket._id === winnerId) {
+								console.log('WINNER SOCKET', socket);
+							}
+							if (socket._id === loserId) {
+								console.log("LOSER SOCKET", socket);
+							}
+						})
 						// const { sockets, length } = sio.sockets.adapter;
-						console.log(JSON.stringify(sio.sockets.adapter.sockets))
+						// console.log(JSON.stringify(sio.sockets.adapter.sockets))
+						
 						// if (JSON.stringify(userId) === JSON.stringify(winnerId)) {
 						// 	console.log("WON")
 						// 	socket.emit('update_user', data[0]);

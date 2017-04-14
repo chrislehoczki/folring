@@ -82,7 +82,6 @@ exports.signup = function(req, res, next) {
 };
 
 exports.facebookLogin = function(req, res) {
-  console.log('GETTING HERE', req)
   passport.authenticate('facebook', {
     session: false
     }), function(req, res) {
