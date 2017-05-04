@@ -4,6 +4,8 @@ import Piece from "./Piece";
 
 require('./Game.css');
 
+let piecesLeft = 18
+
 export default class Game extends React.Component {
 
   constructor() {
@@ -13,7 +15,6 @@ export default class Game extends React.Component {
       selectedIndex: null,
       me: 10,
       meSelected: 11,
-      piecesLeft: 18,
       turn: 0,
       board: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
       // 0 - empty slot
@@ -122,12 +123,13 @@ export default class Game extends React.Component {
   addPiece(piece) {
     // If I am player number 0 add black piece (10) otherwise add white (20)
     const myPiece = this.playerSide === 0 ? 10 : 20
-    if (this.state.piecesLeft > 0 && !this.state.pieceSelected) {
+    if (piecesLeft > 0 && !this.state.pieceSelected) {
       let nextBoard = [...this.state.board]
       nextBoard[piece] = myPiece
       // Change turns
       const nextTurn = this.state.turn === 0 ? 1 : 0
-      this.setState({...this.state, turn: nextTurn, piecesLeft: (this.state.piecesLeft - 1), board: nextBoard }, () => this.sendState())
+      piecesLeft = piecesLeft - 1
+      this.setState({...this.state, turn: nextTurn, board: nextBoard }, () => this.sendState())
     }
   }
 
@@ -393,7 +395,7 @@ export default class Game extends React.Component {
 
     return (
       <div className={boardClass}>
-        <div className="background"><div className="pieceCount">You have {this.state.piecesLeft} pieces left</div></div>
+        <div className="background"><div className="pieceCount">You have {piecesLeft} pieces left</div></div>
         {pieces}
       </div>
     )
