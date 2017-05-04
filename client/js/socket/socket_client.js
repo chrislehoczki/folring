@@ -8,7 +8,7 @@ export function socket() {
 
 		let url = `http://localhost:${5000}`
 		if (process.env.NODE_ENV === 'production') {
-			url = 'http://tolring.azurewebsites.net/'
+			url = 'http://folring.azurewebsites.net/'
 		}
 
 		var socket = require('socket.io-client')(url);
