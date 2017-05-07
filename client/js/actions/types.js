@@ -17,3 +17,9 @@ export const UPDATE_CURRENT_ROOM = 'update_current_room';
 
 // ui
 export const UPDATE_UI = 'update_ui';
+
+// messaging
+export const ADD_MESSAGE = 'add_message';
+
+// notifications
+export const TOGGLE_NOTIFICATION = 'show_notification';

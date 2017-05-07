@@ -1,7 +1,7 @@
 
-import { LOAD_CURRENT_ROOM, UPDATE_CURRENT_ROOM } from '../actions/types';
+import { LOAD_CURRENT_ROOM, UPDATE_CURRENT_ROOM, ADD_MESSAGE } from '../actions/types';
 
-export default function(state = null, action) {
+export default function(state = {messages: []}, action) {
 	
 	switch (action.type) {
 		case LOAD_CURRENT_ROOM: 
@@ -10,6 +10,8 @@ export default function(state = null, action) {
 		case UPDATE_CURRENT_ROOM:
 			return { ...state, ...action.payload };
 		break;
+		case ADD_MESSAGE:
+			return { ...state, messages: [...state.messages, action.payload ]}
 	}	
 
 	return state;

@@ -37,10 +37,11 @@ class Homepage extends Component {
 			roomComponents = rooms.map((room) => <Room {...this.props} key={room._id} room={room} />)
 		} 
 
-		let currentRoom = null;
+		let currentRoom = null, currentRooms = [];
 
-		const currentRooms = this.props.user.playingRooms.map((room) => <CurrentRoom {...this.props} loadCurrentRoom={this.props.loadCurrentRoom} room={room} />)
-		
+		if (this.props.user) {
+			currentRooms = this.props.user.playingRooms.map((room) => <CurrentRoom {...this.props} loadCurrentRoom={this.props.loadCurrentRoom} room={room} />)
+		}
 		// if (this.props.currentRoom) {
 		// 	currentRoom = <CurrentRoom {...this.props} loadCurrentRoom={this.props.loadCurrentRoom} room={this.props.currentRoom} />
 		// }

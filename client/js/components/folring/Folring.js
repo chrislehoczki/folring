@@ -8,10 +8,12 @@ import { emit } from '../../actions/socket';
 import Messaging from './messaging/Messaging';
 import Game from './game/Game.js';
 import Users from './users/Users.js';
+import Notification from './messaging/Notification';
 
 import queryString from 'query-string';
 
 import { getCurrentRoom, loadCurrentRoom } from '../../actions/rooms';
+import { toggleNotification } from '../../actions/notifications';
 
 if (process.env.BROWSER) {
   require('./Folring.css');
@@ -63,7 +65,8 @@ class Folring extends Component {
 					<div className="folring-holder">
 						<Game sendGame={this.sendGame} room={this.props.currentRoom} user={this.props.user}/>}
 					</div>	
-					{/*<Messaging user={this.props.user} />*/}
+					<Messaging user={this.props.user} room={this.props.currentRoom} toggleNotification={this.props.toggleNotification} />
+					<Notification notification={this.props.notification} />
 				</div>
 				: null}
 			</div>
@@ -74,14 +77,16 @@ class Folring extends Component {
 const mapStateToProps = (state) => {
     return {
     	currentRoom: state.currentRoom,
-    	user: state.user
+    	user: state.user,
+    	notification: state.notification
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         getCurrentRoom,
-        loadCurrentRoom
+        loadCurrentRoom,
+        toggleNotification
     }, dispatch);
 };
 

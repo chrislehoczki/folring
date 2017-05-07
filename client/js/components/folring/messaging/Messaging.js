@@ -5,20 +5,15 @@ import React, { Component } from 'react';
 import Message from './Message';
 import MessageInput from './MessageInput';
 
+import { emit } from '../../../actions/socket';
+
 
 export default class Messaging extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			messages: [{user: 'admin', message: 'You can speak to eachother here.'}]
-		}
+	
 		this.sendMessage = this.sendMessage.bind(this);
 		this.addMessage = this.addMessage.bind(this);
-	}
-
-
-	componentDidMount() {
-		window.socket.on('message', this.addMessage);
 	}
 
 	addMessage(message) {
@@ -27,19 +22,16 @@ export default class Messaging extends Component {
 	}
 
 
-	componentWillUnmount() {
-		window.socket.removeListener('message', this.addMessage)
-	}
-
-
 	sendMessage(message) {	
-		console.log('EMITTING MESSAGE')	
-		window.socket.emit('message', message, this.props.user );
+		const messageConfig =  {room: this.props.room._id, message: message, user: this.props.user.facebook ? this.props.user.facebook.displayName : this.props.user.username }
+		emit('message', messageConfig);
+		// console.log(this.props)
+		// this.props.toggleNotification({show: true, notification: 'test'})
 	}
 
 	render() {
-
-		const messages = this.state.messages.map((message, i) => <Message key={i} message={message.message}/>)
+		console.log('ROOM MESSAGES', this.props.room.messages)
+		const messages = this.props.room.messages.map((message, i) => <Message key={i} message={message.message}/>)
 
 		return (
 			<div id='messaging'>

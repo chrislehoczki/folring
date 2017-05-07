@@ -5,13 +5,15 @@ import userReducer from './user_reducer';
 import uiReducer from './ui_reducer';
 import mainRoomReducer from './main_room_reducer';
 import currentRoomReducer from './current_room_reducer';
+import notificationReducer from './notification_reducer';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
   user: userReducer,
   ui: uiReducer,
   mainRooms: mainRoomReducer,
-  currentRoom: currentRoomReducer
+  currentRoom: currentRoomReducer,
+  notification: notificationReducer
 });
 
 export default rootReducer;

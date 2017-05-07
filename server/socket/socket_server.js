@@ -25,10 +25,17 @@ module.exports = function socketSetup(server) {
 		    socket.on('leave_room', (config) => leaveRoom(socket, config));  
 
 		    socket.on('update_room_game', (config) => updateRoomGame(socket, config));
+
+		    socket.on('message', (config) => sendMessage(socket, config));
 		  });
 
 
 
+function sendMessage (socket, {room, message, user}) {
+	console.log(room, message, user)
+	const composedMessage = { user, message }
+	sio.to(room).emit('message', composedMessage);
+}
 
 
 function joinRoom(socket, {roomId, role}) {
@@ -94,21 +101,40 @@ function updateRoomGame(socket, {roomId, game}) {
 				// need to find way to send to both players in the room - not just the one sending the data
 				storeGameWin(socket, { roomId, winnerId, loserId })
 					.then((data) => {
-
+						console.log('WIN DATA', data)
 						// console.log(sio.sockets.in(roomId))
-						const socketIds = Object.keys(sio.sockets.in(roomId));
+						// const socketIds = Object.keys(sio.sockets.in(roomId));
+						// console.log("CURRENT SOCKET ID", socket._id);
+						// console.log('socketIds', socketIds)
 
-						socketIds.forEach((socketId, i) => {
-
-							const socket = sio.sockets.in(roomId)[socketId];
-							console.log("SOCKET " + i, socket._id)
-							if (socket._id === winnerId) {
-								console.log('WINNER SOCKET', socket);
-							}
-							if (socket._id === loserId) {
-								console.log("LOSER SOCKET", socket);
-							}
-						})
+						// var namespace = '/';
+						// var roomName = roomId;
+						// console.log('WINNER ID', winnerId, 'LOSER ID', loserId)
+						// for (var socketId in sio.nsps[namespace].adapter.rooms[roomName].sockets) {
+						//     console.log('socketId', socketId);
+						//     console.log("socket _id", socket._id);
+						//     console.log('winner id', socket._id);
+						//     console.log(socket._id.toString() == loserId.toString());
+						//     console.log('socket _id equals user _id', socket._id == loserId)
+						//     if (socket._id === winnerId) {
+						//     	console.log('this is the winnder', socket._id)
+						//     }
+						//     if (socket._id === loserId) {
+						//     	console.log('this is the loser', socket._id)
+						//     }
+						// }
+						// socketIds.forEach((socketId, i) => {
+						// 	console.log('WINNDER', winnerId)
+						// 	console.log('LOSER', loserId)
+						// 	const socket = sio.sockets.in(roomId)[socketId];
+						// 	console.log("SOCKET " + i, socket._id)
+						// 	if (socket._id === winnerId) {
+						// 		console.log('WINNER SOCKET', socket);
+						// 	}
+						// 	if (socket._id === loserId) {
+						// 		console.log("LOSER SOCKET", socket);
+						// 	}
+						// })
 						// const { sockets, length } = sio.sockets.adapter;
 						// console.log(JSON.stringify(sio.sockets.adapter.sockets))
 						
