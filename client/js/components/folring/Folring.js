@@ -56,6 +56,7 @@ class Folring extends Component {
 	}
 
 	render() {
+		console.log('NOTIFICATION', this.props.notification)
 		return (
 			<div className="game-holder">
 				<button className="leaveGame" onClick={this.leaveGame.bind(this)}></button>
@@ -65,8 +66,8 @@ class Folring extends Component {
 					<div className="folring-holder">
 						<Game sendGame={this.sendGame} room={this.props.currentRoom} user={this.props.user}/>}
 					</div>	
-					<Messaging user={this.props.user} room={this.props.currentRoom} toggleNotification={this.props.toggleNotification} />
-					<Notification notification={this.props.notification} />
+					<Messaging user={this.props.user} room={this.props.currentRoom} />
+					{ this.props.notification.show ? <Notification notification={this.props.notification} /> : null }
 				</div>
 				: null}
 			</div>

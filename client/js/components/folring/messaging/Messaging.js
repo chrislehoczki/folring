@@ -25,8 +25,6 @@ export default class Messaging extends Component {
 	sendMessage(message) {	
 		const messageConfig =  {room: this.props.room._id, message: message, user: this.props.user.facebook ? this.props.user.facebook.displayName : this.props.user.username }
 		emit('message', messageConfig);
-		// console.log(this.props)
-		// this.props.toggleNotification({show: true, notification: 'test'})
 	}
 
 	render() {
