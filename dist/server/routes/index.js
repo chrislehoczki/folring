@@ -76,7 +76,7 @@ module.exports = function (app) {
 
   app.route('/api/rooms').get(requireAuth, _room.getRooms);
 
-  app.get('*', function (req, res) {
+  app.get('/', function (req, res) {
     var store = (0, _redux.createStore)(_index2.default);
     var preloadedState = store.getState();
     var html = _server2.default.renderToString(_react2.default.createElement(

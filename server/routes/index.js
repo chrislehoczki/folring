@@ -62,7 +62,7 @@ module.exports = (app) => {
     app.route('/api/rooms')
       .get(requireAuth, getRooms)
 
-    app.get('*', (req, res) => {
+    app.get('/', (req, res) => {
       const store = createStore(rootReducer);
       let preloadedState = store.getState();
       const html = ReactDOMServer.renderToString(
