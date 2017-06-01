@@ -22,7 +22,7 @@ const setupSocket = require('./socket/socket_server');
 // const socket = require('./socket_server');
 
 mongoose.Promise = global.Promise;
-const mongooseURI = 'mongodb://root:abc123@localhost:3000/folring';
+const mongooseURI = 'mongodb://admin:admin@ds161041.mlab.com:61041/folring';
 mongoose.connect(mongooseURI);
 
 const Folring = require('./socket_server');

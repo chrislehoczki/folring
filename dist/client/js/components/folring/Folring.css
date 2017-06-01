@@ -1,0 +1,186 @@
+
+
+#messaging {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 374px);
+  color: white;
+  background: #333;
+  padding-top: 8px;
+  overflow: scroll;
+}
+
+button.home {
+  position: absolute;
+  top: 10px;
+  left: 50px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjQgMjQ7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PGcgaWQ9ImluZm8iLz48ZyBpZD0iaWNvbnMiPjxnIGlkPSJibG9jayI+PHBhdGggZD0iTTgsMkg0QzIuOSwyLDIsMi45LDIsNHY0YzAsMS4xLDAuOSwyLDIsMmg0YzEuMSwwLDItMC45LDItMlY0QzEwLDIuOSw5LjEsMiw4LDJ6Ii8+PHBhdGggZD0iTTIwLDJoLTRjLTEuMSwwLTIsMC45LTIsMnY0YzAsMS4xLDAuOSwyLDIsMmg0YzEuMSwwLDItMC45LDItMlY0QzIyLDIuOSwyMS4xLDIsMjAsMnoiLz48cGF0aCBkPSJNOCwxNEg0Yy0xLjEsMC0yLDAuOS0yLDJ2NGMwLDEuMSwwLjksMiwyLDJoNGMxLjEsMCwyLTAuOSwyLTJ2LTRDMTAsMTQuOSw5LjEsMTQsOCwxNHoiLz48cGF0aCBkPSJNMjAsMTRoLTRjLTEuMSwwLTIsMC45LTIsMnY0YzAsMS4xLDAuOSwyLDIsMmg0YzEuMSwwLDItMC45LDItMnYtNEMyMiwxNC45LDIxLjEsMTQsMjAsMTR6Ii8+PC9nPjwvZz48L3N2Zz4=');
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-filter: invert(1);
+}
+
+button.profile {
+  position: absolute;
+  top: 10px;
+  left: 90px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjQgMjQ7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PGcgaWQ9ImluZm8iLz48ZyBpZD0iaWNvbnMiPjxnIGlkPSJ1c2VyIj48ZWxsaXBzZSBjeD0iMTIiIGN5PSI4IiByeD0iNSIgcnk9IjYiLz48cGF0aCBkPSJNMjEuOCwxOS4xYy0wLjktMS44LTIuNi0zLjMtNC44LTQuMmMtMC42LTAuMi0xLjMtMC4yLTEuOCwwLjFjLTEsMC42LTIsMC45LTMuMiwwLjlzLTIuMi0wLjMtMy4yLTAuOSAgICBDOC4zLDE0LjgsNy42LDE0LjcsNywxNWMtMi4yLDAuOS0zLjksMi40LTQuOCw0LjJDMS41LDIwLjUsMi42LDIyLDQuMSwyMmgxNS44QzIxLjQsMjIsMjIuNSwyMC41LDIxLjgsMTkuMXoiLz48L2c+PC9nPjwvc3ZnPg==');
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-filter: invert(1);
+}
+button.leaveGame {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pjxzdmcgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMjQgMjQ7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAyNCAyNCIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+PGcgaWQ9ImluZm8iLz48ZyBpZD0iaWNvbnMiPjxnIGlkPSJleGl0MiI+PHBhdGggZD0iTTEyLDEwYzEuMSwwLDItMC45LDItMlY0YzAtMS4xLTAuOS0yLTItMnMtMiwwLjktMiwydjRDMTAsOS4xLDEwLjksMTAsMTIsMTB6Ii8+PHBhdGggZD0iTTE5LjEsNC45TDE5LjEsNC45Yy0wLjMtMC4zLTAuNi0wLjQtMS4xLTAuNGMtMC44LDAtMS41LDAuNy0xLjUsMS41YzAsMC40LDAuMiwwLjgsMC40LDEuMWwwLDBjMCwwLDAsMCwwLDBjMCwwLDAsMCwwLDAgICAgYzEuMywxLjMsMiwzLDIsNC45YzAsMy45LTMuMSw3LTcsN3MtNy0zLjEtNy03YzAtMS45LDAuOC0zLjcsMi4xLTQuOWwwLDBDNy4zLDYuOCw3LjUsNi40LDcuNSw2YzAtMC44LTAuNy0xLjUtMS41LTEuNSAgICBjLTAuNCwwLTAuOCwwLjItMS4xLDAuNGwwLDBDMy4xLDYuNywyLDkuMiwyLDEyYzAsNS41LDQuNSwxMCwxMCwxMHMxMC00LjUsMTAtMTBDMjIsOS4yLDIwLjksNi43LDE5LjEsNC45eiIvPjwvZz48L2c+PC9zdmc+');
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-filter: invert(1);
+}
+
+#messaging.black {
+  background: #333;  
+}
+
+#messaging.white {
+
+}
+
+#message-input {
+  position: fixed;
+  width: 100%;
+  margin-top: -8px;
+  margin-bottom: 8px;
+  border-bottom: 1px dotted white;
+}
+
+h2 {
+	color: white;
+}
+
+input {
+  -webkit-appearance: none;
+  background: #333;
+  padding: 10px 15px;
+  color: white;
+  display: block;
+  font-size: 20px;
+  width: calc(100% - 30px);
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+ 
+#message-input button {
+	position: absolute;
+  top: 3px;
+  right: 7px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/PjxzdmcgaGVpZ2h0PSIxOHB4IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAyMyAxOCIgd2lkdGg9IjIzcHgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6c2tldGNoPSJodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2gvbnMiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48dGl0bGUvPjxkZXNjLz48ZGVmcy8+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBpZD0iUGFnZS0xIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSI+PGcgZmlsbD0iIzAwMDAwMCIgaWQ9IkNvcmUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC00MjEuMDAwMDAwLCAtMzgxLjAwMDAwMCkiPjxnIGlkPSJzZW5kIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MjEuNTAwMDAwLCAzODEuMDAwMDAwKSI+PHBhdGggZD0iTTAsMTggTDIxLDkgTDAsMCBMMCw3IEwxNSw5IEwwLDExIEwwLDE4IFoiIGlkPSJTaGFwZSIvPjwvZz48L2c+PC9nPjwvc3ZnPg==');
+  background-size: 66%;
+  background-position: 10px 10px;
+  cursor: pointer;
+  -webkit-filter: invert(1);
+  background-repeat: no-repeat;
+}
+
+#message-input button:focus {
+  outline: none;
+}
+
+#messaging p {
+  padding: 5px 15px;
+  margin: 0;
+  font-size: 14px;
+  font-style: italic;
+}
+
+#users {
+	position: absolute;
+  top: 0px;
+  left: 133px;
+  width: calc(100% - 133px);
+  text-align: center;
+  padding: 7px 0;
+}
+
+#users .user {
+  font-size: 15px;
+  font-weight: bold;
+  display: block;
+  width: calc(100% - 8px);
+  height: 19px;
+  text-align: left;
+  padding-left: 5px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#users .user.black:before {
+  content: " ";
+  background: black;
+  width: 14px;
+  height: 14px;
+  float: left;
+  font-size: 0px;
+  margin: 2px 6px 0px 0px;
+  border-radius: 50%;
+}
+
+#users .user.white:before {
+  content: " ";
+  background: white;
+  width: 14px;
+  height: 14px;
+  float: left;
+  font-size: 0px;
+  margin: 2px 6px 0px 0px;
+  border-radius: 50%;
+}
+
+#users .user.black {
+  color: black;
+}
+
+#users .user.white {
+  color: white;
+}
+
+
+.notification div {
+  text-align: center;
+  font-size: 50px;
+  background: white;
+  border-radius: 10px;
+  border: 5px solid black;
+  position: absolute;
+  left: calc((100% / 2) - 180px);
+  top: calc((100% / 2) - 200px);
+  width: 320px;
+}
