@@ -51,12 +51,12 @@ const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
   });
 });
 
-
+const callbackUrl = process.env.PRODUCTION ? 'http://folring.azurewebsites.net/auth/facebook/callback' : 'http://localhost:5000/auth/facebook/callback';
 const facebookLogin = new FacebookStrategy({
         // pull in our app id and secret from env
         clientID        : process.env.FACEBOOK_APP_ID,
         clientSecret    : process.env.FACEBOOK_APP_SECRET,
-        callbackURL     : "http://folring.azurewebsites.net/auth/facebook/callback",
+        callbackURL     : callbackUrl,
         profileFields: ['id', 'displayName', 'email', 'name']
     },
 
