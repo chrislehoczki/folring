@@ -13,7 +13,13 @@ if (process.env.BROWSER) {
 let socket = null;
 
 export function connect_socket () {
-  socket = io.connect('http://localhost:5000');
+
+  let url = `http://localhost:${5000}`
+    if (process.env.NODE_ENV === 'production') {
+      url = 'http://folring.azurewebsites.net/'
+    }
+
+  socket = io.connect(url);
   socket.on('connect', function () {
     socket
       .emit('authenticate', {token: window.localStorage.apitoken }) //send the jwt
