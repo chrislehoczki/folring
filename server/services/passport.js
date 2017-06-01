@@ -56,7 +56,7 @@ const facebookLogin = new FacebookStrategy({
         // pull in our app id and secret from env
         clientID        : process.env.FACEBOOK_APP_ID,
         clientSecret    : process.env.FACEBOOK_APP_SECRET,
-        callbackURL     : "http://localhost:5000/auth/facebook/callback",
+        callbackURL     : "http://folring.azurewebsites.net/auth/facebook/callback",
         profileFields: ['id', 'displayName', 'email', 'name']
     },
 
