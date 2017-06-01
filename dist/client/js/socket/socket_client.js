@@ -8,7 +8,7 @@ function socket() {
 
 	return new Promise(function (resolve, reject) {
 
-		var url = 'http://localhost:' + 5000;
+		var url = 'http://folring.azurewebsites.net/';
 		if ((process && process.env && process.env.NODE_ENV || undefined) === 'production') {
 			url = 'http://folring.azurewebsites.net/';
 		}

@@ -6,7 +6,7 @@ export function socket() {
 
 	return new Promise((resolve, reject) => {
 
-		let url = `http://localhost:${5000}`
+		let url = `http://folring.azurewebsites.net/`
 		if (process.env.NODE_ENV === 'production') {
 			url = 'http://folring.azurewebsites.net/'
 		}
