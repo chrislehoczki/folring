@@ -32,8 +32,8 @@ app.use(bodyParser.urlencoded({
   extended: true,
   limit: '5mb'
 }));
-app.use('/client', express.static(__dirname + '/client'));
-app.use('/dist', express.static(__dirname + '/dist'));
+app.use('/client', express.static(__dirname.substr(0, __dirname.length - 6) + 'client'));
+app.use('/dist', express.static(__dirname.substr(0, __dirname.length - 6)));
 app.use(passport.initialize());
 
 
